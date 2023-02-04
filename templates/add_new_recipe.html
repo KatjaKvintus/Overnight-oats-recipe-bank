@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<title>Add recipe</title>
+<BR><BR>
+<h1>Add a new recipe</h1>
+
+<form action="/send" method="POST">
+
+    Recipe name: <input type="text" name="recipe_name" minlength="5"> <BR><BR>
+    
+    <b>Liquid base: </b><br>
+    <input type="checkbox" name="liquid_base" value="1"> almond milk<BR>
+    <input type="checkbox" name="liquid_base" value="1"> apple juice<BR>
+    <input type="checkbox" name="liquid_base" value="1"> low fat milk<BR>
+    <input type="checkbox" name="liquid_base" value="1"> oat milk<BR>
+    <input type="checkbox" name="liquid_base" value="1"> soy milk<BR><BR>
+    <b>Ingredient 1:</b><br>
+    <input type="checkbox" name="ingredient" value="1"> apple sauce<BR>
+    <input type="checkbox" name="ingredient" value="2"> avocado<BR>
+    <input type="checkbox" name="ingredient" value="3"> banana<BR>
+    <input type="checkbox" name="ingredient" value="4"> blueberry<BR>
+    <input type="checkbox" name="ingredient" value="5"> cinnamon<BR>
+    <input type="checkbox" name="ingredient" value="6"> kiwi<BR>
+    <input type="checkbox" name="ingredient" value="7"> spinach<BR><BR>
+    <p>
+    <b>Ingredient 2:</b><br>
+    <input type="checkbox" name="ingredient" value="1"> apple sauce<BR>
+    <input type="checkbox" name="ingredient" value="2"> avocado<BR>
+    <input type="checkbox" name="ingredient" value="3"> banana<BR>
+    <input type="checkbox" name="ingredient" value="4"> blueberry<BR>
+    <input type="checkbox" name="ingredient" value="5"> cinnamon<BR>
+    <input type="checkbox" name="ingredient" value="6"> kiwi<BR>
+    <input type="checkbox" name="ingredient" value="7"> spinach<BR><BR>
+    <p>  
+    <b>Grain:</b><br>
+    <input type="checkbox" name="grain" value="A"> instant oatmeal grain<BR>
+    <input type="checkbox" name="grain" value="B"> oatmeal fiber+<BR>
+    <input type="checkbox" name="grain" value="C"> gluten free oatmeal grains<BR><BR>
+    <p>
+    <b>Protein: </b><br>
+    <input type="checkbox" name="grain" value="D"> greek youghurt<BR>
+    <input type="checkbox" name="grain" value="E"> protein powder<BR>
+    <input type="checkbox" name="grain" value="F"> greek youghurt<BR><BR>
+    <p>
+    <b>Instructions:</b> <br>
+    <textarea name="instructions" rows="6" cols="50"></textarea>
+    <BR><BR>
+    <input type="submit" value="Save to the database">
+    </form>
+
+<form action="\main_page.html"></form>
+    <input type="submit" value="Return to the main page">
+</form>
+
+<input type="button" value="Log out">

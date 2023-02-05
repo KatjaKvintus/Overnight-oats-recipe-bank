@@ -1,8 +1,11 @@
 from flask import Flask
-from flask import redirect, render_template, request
+from flask import redirect, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
+from os import getenv
+
 
 app = Flask(__name__)
+app.secret_key = getenv("SECRET_KEY")
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///kvintus"
 db = SQLAlchemy(app)
 
@@ -11,11 +14,20 @@ db = SQLAlchemy(app)
 def index():
     return render_template("index.html")
 
-@app.route("/login")
-def login():
-    return render_template("login.html")
 
-@app.route("/new_account")
+@app.route("/login",methods=["POST"])
+def login():
+    
+    username = request.form["username"]
+    password = request.form["password"]
+
+    # Check if the username exists and matches with the password
+    if login.log_in_user(username, password):
+        session["username"] = username
+        return redirect("/")
+
+
+@app.route("/register")
 def new_account():
     return render_template("register.html")
 
@@ -25,17 +37,11 @@ def main_page():
 
 @app.route("/admin_tools")
 def admin_tools():
-    return("Tänne tulee pääkäyttäjän työkalut")
+    return render_template("admin_tools.html")
 
 @app.route("/exit")
 def exit():
     return("Bye bye!")
-
-# For new pages
-@app.route("/page/<int:id>")
-def page(id):
-    return "Tämä on sivu " + str(id)
-
 
 @app.route("/form")
 def form():

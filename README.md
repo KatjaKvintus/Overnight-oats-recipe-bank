@@ -10,7 +10,8 @@ Sovellus tarjoaa käyttäjälle tuorepuuroreseptitietokannan, josta käyttäjä 
 - antaa reseptille arvion (1-5 tähteä)
 - syöttää tietokantaan oman tuorepuuroreseptin
 
-##Tilanne 5.2.2022
+
+## Tilanne 5.2.2022
 
 Sovelluksessa on vasta tietokantataulut ja html-pohjien rungot, ei toimivia toiminnallisuuksia (juutuin säätämään käyttäjätilin luomista ja kirjautumista, joita en saa toimimaan). Sovellusta ei voi vielä testata.
 

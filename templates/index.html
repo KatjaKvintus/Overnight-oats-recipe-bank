@@ -1,22 +1,7 @@
 <!DOCTYPE html>
-<title>Welcome!</title>
-<h1>Overnight oats recipe bank</h1>
-<BR>
+{% extends "layout.html" %}
+{% block content %}
 
-{% if session.username %}
-<p>OYou are logged in as {{ session.username }}</p>
-<a href="/logout">Log out</a>
+<a href="/login">Please log in</a><BR><BR>
 
-{% else %}
-
-<form action="/login" method="POST">
-<p>Username:<br>
-<input type="text" name="username"></p>
-<p>Password:<br>
-<input type="password" name="password"></p>
-<input type="submit" value="Log in">
-</form>
-
-<BR><BR>If you don't have an user account, you can create it <a href=\register>here</a>.
-{% endif %}
-
+{% endblock %}

@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+{% extends "layout.html" %}
+{% block content %}
+
 <title>Create a new user account</title><BR><BR>
 
 <b>To use this page you will need an user account.</b><BR><BR>
@@ -7,13 +10,15 @@ Creating the account and using this app is free.<BR><BR>
 
 Choose a unique username that has at least 3 characters.<BR><BR>
 
-<form action="/main_page" method="POST">
-    Choose username: <BR><input type="text" name="username" minlength="3"> <BR><BR>
-    Choose password: <BR><input type="text" name="password1"> <BR><BR>
-    Repeat the password: <BR><input type="text" name="password2"> <BR><BR>
-    <input type="submit" value="Save">
-    </form>
+<form action="/" method="POST">
+Choose username: <BR><input type="text" name="username" minlength="3"> <BR><BR>
+Choose password: <BR><input type="password" name="password1"> <BR><BR>
+Repeat the password: <BR><input type="password" name="password2"> <BR><BR>
+<input type="submit" value="Save">
+</form>
 
-    <BR><BR>
+<BR><BR>
 
-    <input type="button" value="Log out">
+<input type="button" value="Log out">
+
+{% endblock %}

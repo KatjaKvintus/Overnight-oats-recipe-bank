@@ -1,9 +1,14 @@
-<!DOCTYPE html>
+{% extends "layout.html" %}
 
-<h1>Overnight oats recipe bank</h1>
 
-<b>Welcome, {{name}}!</b>
-<BR>
+{% if session.username %}
+<p>Welcome, {{ session.username }}!</p>
+{% else %}
+
+Et ole kirjautunut
+{% endif %}
+
+{% block content %}
 This page is still under construction.
 <BR><BR>
 
@@ -13,5 +18,8 @@ This page is still under construction.
 <input type="button" value="Recipe search">
 <input type="button" value="Recipe of the week">
 <input type="button" value="Add a new recipe">
-<input type="button" value="My favorites">
-<input type="button" value="Log out">
+<input type="button" value="My favorites"><BR><BR>
+<a href="/logout">Log out</a>
+
+{% endblock %}
+

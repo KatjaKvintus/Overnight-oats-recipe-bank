@@ -1,6 +1,6 @@
 from flask import Flask
 from os import getenv
-from sqlalchemy.sql import text
+
 
 
 app = Flask(__name__)

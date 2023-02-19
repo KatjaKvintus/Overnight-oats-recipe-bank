@@ -7,7 +7,7 @@ import recipes
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("login.html")
+    return render_template("index.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -50,6 +50,12 @@ def register():
     return redirect("/mainpage")
 
 
+@app.route("/mainpage", methods=["GET", "POST"])
+def mainpage():
+    #latest_recipe = recipes.show_latest_recipe()
+    return render_template("mainpage.html")
+
+
 @app.route("/add_new_recipe", methods=["GET", "POST"])
 def add_new_recipe():
 
@@ -75,6 +81,22 @@ def add_new_recipe():
         return render_template("recipe_saved.html")
 
 
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    
+    #query = request.args["query"]
+    #sql = "SELECT id FROM recipes WHERE content LIKE :query"
+    #result = db.session.execute(sql, {"query":"%"+query+"%"})
+    #recipe_search_result = result.fetchall()
+    return render_template("search.html")
+
+
+# For generating pages for individual recipes
+@app.route("/page/<int:id>")
+def page(id):
+    return "Recipe number " + str(id)
+
+
 @app.route("/admin_tools")
 def admin_tools():
     return render_template("admin_tools.html")
@@ -85,12 +107,7 @@ def form():
     return render_template("form.html")
 
 
-@app.route("/mainpage", methods=["GET", "POST"])
-def mainpage():
-    return render_template("mainpage.html")
-
-
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
     users.log_out()
-    return redirect("/login")
+    return render_template("logout.html")

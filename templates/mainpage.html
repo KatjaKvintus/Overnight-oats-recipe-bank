@@ -1,25 +1,24 @@
 {% extends "layout.html" %}
 
-
-{% if session.username %}
-<p>Welcome, {{ session.name }}!</p>
-{% else %}
-
-Et ole kirjautunut
-{% endif %}
-
 {% block content %}
-<BR>
-<input type="button" value="Recipe search">
-<input type="button" value="Recipe of the week">
+<p>Welcome, {{ session.user_name }}!</p>  <a href="/logout">Log out</a><BR>
 
-<form action="/add_new_recipe">
-    <input type="submit" value="Add a new recipe">
+<BR>
+<form action="/search">
+<input type="submit" value="Recipe search">
 </form>
 
 
+<input type="button" value="Recipe of the week"><BR><BR>
+
+<form action="/add_new_recipe">
+<input type="submit" value="Add a new recipe">
+</form>
+
 <input type="button" value="My favorites"><BR><BR>
-<a href="/logout">Log out</a>
+
+
+
 
 {% endblock %}
 

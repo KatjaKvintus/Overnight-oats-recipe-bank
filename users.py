@@ -12,28 +12,20 @@ def user_id():
 # Log in function for users that have an user account
 def log_in_user(name, password):
 
-    #Debugging **************************************************************
-    #print("DEBUG 1: name on ", name, " ja salasana on ", password)
-
     sql = text("SELECT id, password, role FROM users WHERE name=:name")
     result = db.session.execute(sql, {"name":name})
     user = result.fetchone()
-    password_in_table = user[1]
 
-    #Debugging **************************************************************
-    #print("DEBUG 2: User on ", user)
+    if not user:
+        return False
 
     if not check_password_hash(user[1], password):
         return False
     
     session["user_id"] = user[0]
-
     session["user_name"] = name
-    session["user_role"] = user[2]
+    #session["user_role"] = user[2]
     session["csrf_token"] = os.urandom(16).hex()
-    
-    session_user_name = session["user_name"]
-    session_user_role = session["user_role"]
 
     return True   
 
@@ -72,5 +64,4 @@ def username_taken(username):
 def log_out():
     del session["user_id"]
     del session["user_name"]
-    del session["user_role"]
 

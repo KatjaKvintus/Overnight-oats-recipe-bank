@@ -8,41 +8,50 @@
 
     Recipe name: <input type="text" name="name" minlength="5"> <BR><BR>
     <b>Type: </b><br>
-    <input type="radio" name="type" value="healthy"> healthy<BR>
-    <input type="radio" name="type" value="healthy"> vegan<BR>
     <input type="radio" name="type" value="delicacy"> delicacy<BR>
-    <input type="radio" name="type" value="glutein free"> glutein free<BR>
-    <input type="radio" name="type" value="power food"> power food<BR><BR>
+    <input type="radio" name="type" value="gluten free"> gluten free<BR>
+    <input type="radio" name="type" value="healthy"> healthy<BR>   
+    <input type="radio" name="type" value="power food"> power food<BR>
+    <input type="radio" name="type" value="vegan"> vegan<BR><BR>
+    
     <b>Liquid base: </b><br>
     <input type="radio" name="base_liquid" value="almond milk"> almond milk<BR>
     <input type="radio" name="base_liquid" value="apple juice"> apple juice<BR>
     <input type="radio" name="base_liquid" value="low fat milk"> low fat milk<BR>
     <input type="radio" name="base_liquid" value="oat milk"> oat milk<BR>
     <input type="radio" name="base_liquid" value="soy milk"> soy milk<BR><BR>
+    
     <b>Ingredient 1:</b><br>
     <input type="radio" name="ingredient_1" value="apple sauce"> apple sauce<BR>
     <input type="radio" name="ingredient_1" value="avocado"> avocado<BR>
     <input type="radio" name="ingredient_1" value="banana"> banana<BR>
     <input type="radio" name="ingredient_1" value="blueberry"> blueberry<BR>
-    <input type="radio" name="ingredient_1" value="cinnamon"> cinnamon<BR>
     <input type="radio" name="ingredient_1" value="kiwi"> kiwi<BR>
-    <input type="radio" name="ingredient_1" value="spinach"> spinach<BR><BR>
+    <input type="radio" name="ingredient_1" value="spinach"> spinach<BR>
+    <input type="radio" name="ingredient_1" value="strawberries"> strawberries<BR><BR>
+    
     <b>Ingredient 2:</b><br>
     <input type="radio" name="ingredient_2" value="apple sauce"> apple sauce<BR>
     <input type="radio" name="ingredient_2" value="avocado"> avocado<BR>
     <input type="radio" name="ingredient_2" value="banana"> banana<BR>
     <input type="radio" name="ingredient_2" value="blueberry"> blueberry<BR>
-    <input type="radio" name="ingredient_2" value="cinnamon"> cinnamon<BR>
     <input type="radio" name="ingredient_2" value="kiwi"> kiwi<BR>
-    <input type="radio" name="ingredient_2" value="spinach"> spinach<BR><BR>
+    <input type="radio" name="ingredient_2" value="spinach"> spinach<BR>
+    <input type="radio" name="ingredient_2" value="strawberries"> strawberries<BR><BR>
+    
     <b>Grain:</b><br>
+    <input type="radio" name="grain" value="gluten free oatmeal grains"> gluten free oatmeal grains<BR>
     <input type="radio" name="grain" value="instant oatmeal grain"> instant oatmeal grain<BR>
     <input type="radio" name="grain" value="oatmeal fiber+"> oatmeal fiber+<BR>
-    <input type="radio" name="grain" value="gluten free oatmeal grains"> gluten free oatmeal grains<BR><BR>
+    <input type="radio" name="grain" value="steel-cut oatmeal grain"> steel-cut oatmeal grain<BR><BR>
+    
     <b>Protein: </b><br>
+    <input type="radio" name="protein" value="cashew nuts"> cashew nuts<BR>
     <input type="radio" name="protein" value="chocolate protein powder"> chocolate protein powder<BR>
-    <input type="radio" name="protein" value="greek youghurt"> greek youghurt<BR>
+    <input type="radio" name="protein" value="peanut butter"> peanut butter<BR>
+    <input type="radio" name="protein" value="tofu"> tofu<BR>
     <input type="radio" name="protein" value="vanilla protein powder"> vanilla protein powder<BR><BR>
+    
     <b>Sweetener: </b><br>
     <input type="radio" name="sweetener" value="artificial sweetener"> artificial sweetener<BR>
     <input type="radio" name="sweetener" value="brown sugar"> brown sugar<BR>
@@ -56,6 +65,6 @@
     <input type="submit" value="Return to the main page">
 </form>
 
-<input type="button" value="Log out">
+<a href="/logout">Log out</a>
 
 {% endblock %}

@@ -2,6 +2,15 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<a href="/login">Please log in</a><BR><BR>
+
+<form action="/login" method="post">
+<p>Username:<br>
+<input type="text" name="username"></p>
+<p>Password:<br>
+<input type="password" name="password"></p>
+<input type="submit" value="Log in">
+</form>
+
+<BR><BR>If you don't have an user account, you can create it <a href=\register>here</a>.
 
 {% endblock %}

@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<p>Logged in as {{ session.user_name }}.</p>  <a href="/logout">Log out</a><BR><BR>
+
+<h2>Recipe of the week</h2>
+
+
+<BR><BR>
+<form action="\mainpage.html"></form>
+<input type="submit" value="Return to the main page">
+</form>
+
+
+{% endblock %}
+

@@ -1,24 +1,43 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<p>Welcome, {{ session.user_name }}!</p>  <a href="/logout">Log out</a><BR>
+<p>Welcome, {{ session.user_name }}!</p>  <a href="/logout">(Log out)</a><BR><BR>
 
 <BR>
-<form action="/search">
-<input type="submit" value="Recipe search">
-</form>
-
-
-<input type="button" value="Recipe of the week"><BR><BR>
 
 <form action="/add_new_recipe">
 <input type="submit" value="Add a new recipe">
 </form>
 
-<input type="button" value="My favorites"><BR><BR>
+<form action="/all_recipes">
+<input type="submit" value="List of all recipes">
+</form>
 
+<form action="/search">
+<input type="submit" value="Recipe search">
+</form>
 
+<input type="button" value="Recipe of the week">[NOTE: button not functional!]<BR><BR>
+<input type="button" value="My favorites">[NOTE: button not functional!]<BR><BR><BR>
 
+<hr>
+<b>Latest recipe in the database:</b><BR><BR>
+<h3>{{ latest_recipe[1] }}</h3>
+<i>Type: {{ latest_recipe[2] }}</i><BR><BR>
+<b>Ingredients</b>:<BR>
+1 dl {{ latest_recipe[4] }}<BR>
+1 dl {{ latest_recipe[5] }}<BR>
+0,25 - 0,5 dl {{ latest_recipe[6] }}<BR>
+0,5 - 1 dl {{ latest_recipe[7] }}<BR>
+0,5 - 1 dl {{ latest_recipe[8] }}<BR>
+0,5 - 1 tbs {{ latest_recipe[9] }}<BR><BR><BR>
+
+Peel and chop/grate fruits/vegetables.<BR><BR>
+Add all ingredients to the bowl and mix well. <BR><BR>
+Cover the bowl with a lid and keep in a refridgerator 1-2 hours or over night.<BR><BR>
+Enjoy!
+
+</hr>
 
 {% endblock %}
 

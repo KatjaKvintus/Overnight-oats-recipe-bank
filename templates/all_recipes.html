@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% extends "layout.html" %}
+{% block content %}
+
+<a href="/mainpage">Return to main page</a><BR>
+<a href="/logout">Log out</a><BR><BR>
+
+<h2>All recipes in the database</h2>
+<i>Recipe count: {{ count }} </i>
+    
+<BR>
+<hr><BR>
+{% for recipe in all_recipes %}
+{{ recipe.name }}<BR>
+{% endfor %}
+
+<BR><BR>
+
+{% endblock %}

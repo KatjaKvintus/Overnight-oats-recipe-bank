@@ -1,8 +1,8 @@
 from app import app
 from flask import redirect, render_template, request, session
-import login
 import users
 import recipes
+import db
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -52,8 +52,37 @@ def register():
 
 @app.route("/mainpage", methods=["GET", "POST"])
 def mainpage():
-    #latest_recipe = recipes.show_latest_recipe()
-    return render_template("mainpage.html")
+    latest_recipe_items = recipes.show_latest_recipe()
+    return render_template("mainpage.html", latest_recipe=latest_recipe_items)
+
+
+@app.route("/search")
+def search():   
+    return render_template("search.html")
+
+
+@app.route("/search_function", methods=["GET", "POST"])
+def search_function():
+
+    keyword = request.args["keyword"]
+    sql = "SELECT * FROM recipes WHERE name LIKE :keyword"
+    search_function = db.session.execute(sql, {"keyword":"%"+keyword+"%"})
+    list_of_search_matching_recipes = search_function.fetchall()
+
+    return render_template("search_results.html", list_of_search_matching_recipes=list_of_search_matching_recipes)
+
+
+@app.route("/search_results")
+def search_results():
+
+    return render_template("search_results.html")
+
+
+@app.route("/all_recipes", methods=["GET", "POST"])
+def all_recipes():
+    all_recipes = recipes.get_all_recipes()
+
+    return render_template("all_recipes.html", count=len(all_recipes), all_recipes=all_recipes)
 
 
 @app.route("/add_new_recipe", methods=["GET", "POST"])
@@ -79,16 +108,6 @@ def add_new_recipe():
             return render_template("error.html", message="Failed to save database.")
     
         return render_template("recipe_saved.html")
-
-
-@app.route("/search", methods=["GET", "POST"])
-def search():
-    
-    #query = request.args["query"]
-    #sql = "SELECT id FROM recipes WHERE content LIKE :query"
-    #result = db.session.execute(sql, {"query":"%"+query+"%"})
-    #recipe_search_result = result.fetchall()
-    return render_template("search.html")
 
 
 # For generating pages for individual recipes

@@ -11,12 +11,19 @@ Sovellus tarjoaa käyttäjälle tuorepuuroreseptitietokannan, josta käyttäjä 
 - syöttää tietokantaan oman tuorepuuroreseptin
 
 
-## Tilanne 17.2.2022
+## Tilanne 19.2.2022
 
-Sovelluksessa on valmiina seuraavat toiminnot:
+Sovelluksessa on seuraavat toiminnot:
 - Uuden käyttäjän luominen
-- Käyttäjän sisäänkirjautuminen
+- Käyttäjän sisään- ja uloskirjautuminen
 - Uuden smoothie-reseptin tallennus tietokantaan
+
+Puuttuu:
+- Reseptihaku
+- Reseptin merkitseminen suosikiksi
+- Reseptin arvostelu
+- Viikon reseptin julkaiseminen
+- Ulkoasun säätäminen
 
 
 ## Käyttöliittymä (luonnos)
@@ -28,9 +35,9 @@ Sovelluksessa on valmiina seuraavat toiminnot:
 ## Tietokantataulut 
 (alustava havainnekuva)
 
-![](https://github.com/KatjaKvintus/Overnight-oats-recipe-bank/blob/master/documents/tables.jpeg)
+![](https://github.com/KatjaKvintus/Overnight-oats-recipe-bank/blob/master/documents/tables.j
 
-Alustavasti sovellukseen on suunniteltu seuraavat tietokantataulut:
+Sovelluksessa on seuraavat tietokantataulut:
 - users
 - favorites
 - upvotes

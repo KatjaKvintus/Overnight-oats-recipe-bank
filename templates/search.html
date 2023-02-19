@@ -3,21 +3,21 @@
 {% block content %}
 <h2>Recipe search</h2>
 <BR>
+<BR><BR>
+<a href="/mainpage">Return to main page</a><BR>
+<a href="/logout">Log out</a><BR><BR>
 
-<form action="/result" method="GET">
-Search with an ingredient: <input type="text" name="query"><BR>
-<input type="submit" value="Search"><BR><BR>
-
-[HUOM: alla olevat linkit ovat placeholdereita - eivät vielä toimi]<BR>
+[NOTE: links below are placeholders, not functional yet]<BR>
 <a href="/">Delicacy recipes</a><BR>
 <a href="/">Gluten free recipes</a><BR>
 <a href="/">Healthy recipes recipes</a><BR>
 <a href="/">Power food recipes</a><BR>
 <a href="/">Vegan recipes</a><BR><BR><BR>
+
+[NOTE: the search function doesn't work either.]
+<form action="/search_function" method="GET">
+<b>Search from recipe names: </b><input type="text" name="keyword"><BR>
+<input type="submit" value="Search"><BR><BR>
 </form>
-
-
-<a href="/mainpage">Return to main page</a><BR>
-<a href="/logout">Log out</a>
 
 {% endblock %}

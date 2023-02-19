@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% extends "layout.html" %}
+{% block content %}
+
+<h1>Recipe search</h1>
+<BR><BR>
+
+<a href="/mainpage">Return to main page</a><BR>
+<a href="/logout">Log out</a><BR>
+
+<hr><BR>
+{% for recipe in list_of_search_matching_recipes %}
+{{ list_of_search_matching_recipes.name }}<BR>
+{% endfor %}
+
+{% endblock %}

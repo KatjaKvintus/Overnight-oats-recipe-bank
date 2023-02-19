@@ -32,6 +32,34 @@ Puuttuu:
 - Ohjaavat virheilmoitukset ja virheiden käsittely tilanteissa, joissa käyttäjä yrittää käyttää sovellusta väärin
 
 
+## Sovelluksen testaaminen
+
+Lataa sovelluksen koodi oikean yläkulman vihreästä Code-napista (> Download zip). Pura zip-tiedosto omalle koneellesi. Lisää juurihakemistoon tiedosto .env ja kopioi sen sisällöksi seuraava:
+
+```bash
+DATABASE_URL=<oma local url>
+SECRET_KEY=<satunnainen numerosarja>
+```
+
+Avaa terminaali ja siirry sovellustiedostokansioon. Luo virtuaaliympäristö ja siirry sinne seuraavilla käskyillä:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+Luo tietokantataulut:
+
+```bash
+psql < schema.sql
+```
+
+Käynnistä sovellus terminaalissa käskyllä
+
+```bash
+flask run
+```
+
+
 ## Käyttöliittymä (luonnos)
 
 ![](https://github.com/KatjaKvintus/Overnight-oats-recipe-bank/blob/master/documents/ui.jpeg)

@@ -18,7 +18,7 @@ Sovelluksessa on seuraavat toiminnot:
 - Sisäänkirjauneen käyttäjän nimen näyttäminen main pagella
 - Käyttäjän sisään- ja uloskirjautuminen
 - Uuden smoothie-reseptin tallennus tietokantaan
-- Viimeisimmän kantaan syötetyn reseptin näyttäminen main pagella
+- Viimeisimmän kantaan syötetyn reseptin näyttäminen main pagella (kunhan ensimmäinen resepti on syötetty tietokantaan)
 - Lista tietokannassa olevista resepteista (linkit varsinaisiin ohjeisiin puuttuvat)
 
 Puuttuu:

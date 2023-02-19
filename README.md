@@ -26,6 +26,7 @@ Puuttuu:
 - Reseptin merkitseminen suosikiksi
 - Reseptin arvostelu
 - Viikon reseptin julkaiseminen
+- Pääkäyttäjän toiminnot (saattaa jäädä kokonaan pois)
 - Ulkoasun säätäminen
 - Tietoturva-asioiden huomioonottaminen
 - Ohjaavat virheilmoitukset ja virheiden käsittely tilanteissa, joissa käyttäjä yrittää käyttää sovellusta väärin
@@ -38,9 +39,9 @@ Puuttuu:
 
 
 ## Tietokantataulut 
-(alustava havainnekuva)
+(havainnekuva)
 
-![](https://github.com/KatjaKvintus/Overnight-oats-recipe-bank/blob/master/documents/tables.j
+![](https://github.com/KatjaKvintus/Overnight-oats-recipe-bank/blob/master/documents/tables.jpeg)
 
 Sovelluksessa on seuraavat tietokantataulut:
 - users

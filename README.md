@@ -11,19 +11,24 @@ Sovellus tarjoaa käyttäjälle tuorepuuroreseptitietokannan, josta käyttäjä 
 - syöttää tietokantaan oman tuorepuuroreseptin
 
 
-## Tilanne 19.2.2022
+## Tilanne 19.2.2022:
 
 Sovelluksessa on seuraavat toiminnot:
 - Uuden käyttäjän luominen
+- Sisäänkirjauneen käyttäjän nimen näyttäminen main pagella
 - Käyttäjän sisään- ja uloskirjautuminen
 - Uuden smoothie-reseptin tallennus tietokantaan
+- Viimeisimmän kantaan syötetyn reseptin näyttäminen main pagella
+- Lista tietokannassa olevista resepteista (linkit varsinaisiin ohjeisiin puuttuvat)
 
 Puuttuu:
-- Reseptihaku
+- Toimiva reseptihaku
 - Reseptin merkitseminen suosikiksi
 - Reseptin arvostelu
 - Viikon reseptin julkaiseminen
 - Ulkoasun säätäminen
+- Tietoturva-asioiden huomioonottaminen
+- Ohjaavat virheilmoitukset ja virheiden käsittely tilanteissa, joissa käyttäjä yrittää käyttää sovellusta väärin
 
 
 ## Käyttöliittymä (luonnos)

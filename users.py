@@ -5,7 +5,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy.sql import text
 
 
-def user_id():
+def get_user_id():
     return session.get("user_id", 0)
 
 

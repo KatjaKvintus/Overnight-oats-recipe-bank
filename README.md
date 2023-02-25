@@ -20,11 +20,12 @@ Sovelluksessa on seuraavat toiminnot:
 - Uuden tuorepuuroreseptin tallennus tietokantaan
 - Haku resepteistä joko otsikon tai raaka-aineen perusteella
 - Viimeisimmän kantaan syötetyn reseptin näyttäminen main pagella (kunhan ensimmäinen resepti on syötetty tietokantaan)
-- Lista tietokannassa olevista resepteista (linkit varsinaisiin ohjeisiin puuttuvat)
+- Lista tietokannassa olevista resepteista (tykkäysnappi puuttuu)
 
 Puuttuu:
 - Reseptin merkitseminen suosikiksi
 - Reseptin arvostelu
+- Reseptin kommentoiminen
 - Viikon reseptin julkaiseminen
 - Pääkäyttäjän toiminnot (saattaa jäädä kokonaan pois)
 - Ulkoasun säätäminen

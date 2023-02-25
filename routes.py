@@ -64,24 +64,27 @@ def search():
 @app.route("/search_function", methods=["GET", "POST"])
 def search_function():
 
-    keyword = request.args["keyword"]
-    sql = "SELECT * FROM recipes WHERE name LIKE :keyword"
-    search_function = db.session.execute(sql, {"keyword":"%"+keyword+"%"})
-    list_of_search_matching_recipes = search_function.fetchall()
+    query1 = request.args["query1"]
+    query2 = request.args["query2"]
+
+    print("DEGUBBAUS: query1 on ", query1, " ja query2 on ", query2)
+
+    if query1 != None:
+        list_of_search_matching_recipes = recipes.search_recipe_by_name(query1)
+    elif query2 != None:
+        list_of_search_matching_recipes = recipes.search_recipe_by_name(query2) 
 
     return render_template("search_results.html", list_of_search_matching_recipes=list_of_search_matching_recipes)
 
 
 @app.route("/search_results")
 def search_results():
-
     return render_template("search_results.html")
 
 
 @app.route("/all_recipes", methods=["GET", "POST"])
 def all_recipes():
     all_recipes = recipes.get_all_recipes()
-
     return render_template("all_recipes.html", count=len(all_recipes), all_recipes=all_recipes)
 
 
@@ -94,7 +97,7 @@ def add_new_recipe():
     if request.method == "POST":      
         name = request.form["name"]
         type = request.form["type"]
-        author_id = users.user_id()
+        author_id = users.get_user_id()
         base_liquid = request.form["base_liquid"]
         grain = request.form["grain"]
         protein = request.form["protein"]
@@ -109,11 +112,18 @@ def add_new_recipe():
     
         return render_template("recipe_saved.html")
 
+# Tarpeeton? ########################################################3
+@app.route("/recipe")
+def recipe(id):
+    show_this_recipe = recipes.collect_recipe_items(id)
+    return render_template("recipe.html", show_this_recipe=show_this_recipe)
+
 
 # For generating pages for individual recipes
-@app.route("/page/<int:id>")
+@app.route("/<int:id>")
 def page(id):
-    return "Recipe number " + str(id)
+    recipe_items = recipes.collect_recipe_items(id)
+    return render_template("recipe.html", recipe_items=recipe_items)
 
 
 @app.route("/admin_tools")

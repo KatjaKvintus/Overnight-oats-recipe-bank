@@ -10,7 +10,10 @@ def save_new_recipe(name, type, author_id, base_liquid, grain, protein, ingredie
                 VALUES (:name, :type, :author_id, :base_liquid, :grain, 
                 :protein, :ingredient_1, :ingredient_2, :sweetener)""")
 
-        db.session.execute(sql, {"name":name, "type":type, "author_id":author_id, "base_liquid":base_liquid, "grain":grain, "protein":protein, "ingredient_1":ingredient_1, "ingredient_2":ingredient_2, "sweetener":sweetener})
+        db.session.execute(sql, {"name":name, "type":type, "author_id":author_id, 
+                                 "base_liquid":base_liquid, "grain":grain, "protein":protein, 
+                                 "ingredient_1":ingredient_1, "ingredient_2":ingredient_2, 
+                                 "sweetener":sweetener})
         db.session.commit()
 
     except:
@@ -42,9 +45,24 @@ def show_latest_recipe():
     return collect_recipe_items(recipe_id)
 
 
-# Recipe search - work in progress
+# Recipe search from recipe names
 def search_recipe_by_name(keyword):
-    sql = text("SELECT * FROM recipes WHERE name LIKE :keyword")
+    keyword = keyword.lower()
+    sql = text("SELECT * FROM recipes WHERE LOWER(name) LIKE :keyword")
+    result = db.session.execute(sql, {"keyword":"%"+keyword+"%"})
+    recipes = result.fetchall()
+    return recipes
+
+
+# Recipe search based on ingredient
+def search_from_ingredients(keyword):
+    keyword = keyword.lower()
+    sql = text("SELECT * FROM recipes WHERE LOWER(base_liquid) LIKE :keyword "+
+               "OR LOWER(grain) LIKE :keyword "+
+               "OR LOWER(protein) LIKE :keyword "+
+               "OR LOWER(ingredient_1) LIKE :keyword "+
+               "OR LOWER(ingredient_2) LIKE :keyword "+
+               "OR LOWER(sweetener) LIKE :keyword")
     result = db.session.execute(sql, {"keyword":"%"+keyword+"%"})
     recipes = result.fetchall()
     return recipes

@@ -64,24 +64,27 @@ def search():
 @app.route("/search_function", methods=["GET", "POST"])
 def search_function():
 
-    keyword = request.args["keyword"]
-    sql = "SELECT * FROM recipes WHERE name LIKE :keyword"
-    search_function = db.session.execute(sql, {"keyword":"%"+keyword+"%"})
-    list_of_search_matching_recipes = search_function.fetchall()
+    query1 = request.args["query1"]
+    query2 = request.args["query2"]
+
+    print("DEGUBBAUS: query1 on ", query1, " ja query2 on ", query2)
+
+    if query1 != None:
+        list_of_search_matching_recipes = recipes.search_recipe_by_name(query1)
+    elif query2 != None:
+        list_of_search_matching_recipes = recipes.search_recipe_by_name(query2) 
 
     return render_template("search_results.html", list_of_search_matching_recipes=list_of_search_matching_recipes)
 
 
 @app.route("/search_results")
 def search_results():
-
     return render_template("search_results.html")
 
 
 @app.route("/all_recipes", methods=["GET", "POST"])
 def all_recipes():
     all_recipes = recipes.get_all_recipes()
-
     return render_template("all_recipes.html", count=len(all_recipes), all_recipes=all_recipes)
 
 
@@ -108,6 +111,12 @@ def add_new_recipe():
             return render_template("error.html", message="Failed to save database.")
     
         return render_template("recipe_saved.html")
+
+
+@app.route("/recipe")
+def recipe(id):
+    show_this_recipe = recipes.collect_recipe_items(id)
+    return render_template("recipe.html", show_this_recipe=show_this_recipe)
 
 
 # For generating pages for individual recipes

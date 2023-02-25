@@ -9,11 +9,24 @@
 <i>Recipe count: {{ count }} </i>
     
 <BR>
-<hr><BR>
 {% for recipe in all_recipes %}
-{{ recipe.name }}<BR>
-{% endfor %}
+<hr>
+<h3>{{ recipe[1] }}</h3>
+<i>Type: {{ recipe[2] }}</i><BR><BR>
+<b>Ingredients</b>:<BR>
+1 dl {{ recipe[4] }}<BR>
+1 dl {{ recipe[5] }}<BR>
+0,25 - 0,5 dl {{ recipe[6] }}<BR>
+0,5 - 1 dl {{ recipe[7] }}<BR>
+0,5 - 1 dl {{ recipe[8] }}<BR>
+0,5 - 1 tbs {{ recipe[9] }}<BR><BR><BR>
 
-<BR><BR>
+Peel and chop/grate fruits/vegetables.<BR><BR>
+Add all ingredients to the bowl and mix well. <BR><BR>
+Cover the bowl with a lid and keep in a refridgerator 1-2 hours or over night.<BR><BR>
+</hr>
+
+<BR>
+{% endfor %}
 
 {% endblock %}

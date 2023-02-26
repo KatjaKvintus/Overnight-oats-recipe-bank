@@ -72,7 +72,9 @@ def search_function():
     elif query2 != None:
         list_of_search_matching_recipes = recipes.search_recipe_by_name(query2) 
 
-    return render_template("search_results.html", list_of_search_matching_recipes=list_of_search_matching_recipes)
+    recipe_amount = len(list_of_search_matching_recipes)
+
+    return render_template("search_results.html", recipe_amount=recipe_amount, list_of_search_matching_recipes=list_of_search_matching_recipes)
 
 
 @app.route("/search_results", methods=["GET", "POST"])
@@ -80,12 +82,24 @@ def search_results():
     return render_template("search_results.html")
 
 
+# Displays individual recipe based in the id number
 @app.route("/page", methods=["GET", "POST"])
 def page():
     if request.method == "POST":
         id = request.form["this_is_recipe_id"]
         show_this_recipe = recipes.collect_recipe_items(id)
         return render_template("recipe.html", id=id, show_this_recipe=show_this_recipe)
+
+
+@app.route("/recipe_type", methods=["GET", "POST"])
+def type():
+
+    type = request.form["type"]    
+
+    if type != None:
+        list_of_search_matching_recipes = recipes.list_recipes_by_type(type)
+        recipe_amount = len(list_of_search_matching_recipes)
+        return render_template("search_results.html", recipe_amount=recipe_amount, list_of_search_matching_recipes=list_of_search_matching_recipes)
 
 
 @app.route("/all_recipes", methods=["GET", "POST"])

@@ -69,6 +69,15 @@ def search_from_ingredients(keyword):
     return recipes
 
 
+# Recipe listing by type
+def list_recipes_by_type(type):
+    type = type.lower()
+    sql = text("SELECT * FROM recipes WHERE LOWER(type) LIKE :type")
+    result = db.session.execute(sql, {"type":"%"+type+"%"})
+    recipes = result.fetchall()
+    return recipes
+
+
 # To mark a recipe as a favorite > added to favorites list
 # Should include some kind of icon & need to check if this entry is already in the table
 def mark_recipe_as_favorite(recipe_id):

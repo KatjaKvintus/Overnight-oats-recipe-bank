@@ -5,24 +5,20 @@
 <h2>Recipe search</h2>
 <BR><BR>
 
-<a href="/search">Return to the search</a><BR>
 <a href="/mainpage">Return to main page</a><BR>
-<a href="/logout">Log out</a><BR>
+<a href="/logout">Log out</a><BR><BR>
 
-<BR>
 
+Recipes found: {{ recipe_amount }} <BR><BR>
 {% for recipe in list_of_search_matching_recipes %}
-    <hr> 
-    <b>{{ recipe[1] }}</b>
-    <i>Type: {{ recipe[2] }}</i><BR><BR>
-
-    <form action="/page" method="post">
-    <input type="hidden" name ="this_is_recipe_id" value="{{ recipe[0] }}">
-    <input type="submit" value="Show the recipe">
-    
-    </form>
-
-    </hr>
+<hr> 
+<b>{{ recipe[1] }}</b>
+<i>Type: {{ recipe[2] }}</i><BR><BR>
+<form action="/page" method="post">
+<input type="hidden" name ="this_is_recipe_id" value="{{ recipe[0] }}">
+<input type="submit" value="Show the recipe">
+</form>
+</hr>
 
 <BR>
 {% endfor %}

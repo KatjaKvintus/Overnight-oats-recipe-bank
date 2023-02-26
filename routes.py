@@ -67,8 +67,6 @@ def search_function():
     query1 = request.args["query1"]
     query2 = request.args["query2"]
 
-    print("DEGUBBAUS: query1 on ", query1, " ja query2 on ", query2)
-
     if query1 != None:
         list_of_search_matching_recipes = recipes.search_recipe_by_name(query1)
     elif query2 != None:
@@ -77,20 +75,28 @@ def search_function():
     return render_template("search_results.html", list_of_search_matching_recipes=list_of_search_matching_recipes)
 
 
-@app.route("/search_results")
+@app.route("/search_results", methods=["GET", "POST"])
 def search_results():
     return render_template("search_results.html")
 
 
+@app.route("/page", methods=["GET", "POST"])
+def page():
+    if request.method == "POST":
+        id = request.form["this_is_recipe_id"]
+        show_this_recipe = recipes.collect_recipe_items(id)
+        return render_template("recipe.html", id=id, show_this_recipe=show_this_recipe)
+
+
 @app.route("/all_recipes", methods=["GET", "POST"])
 def all_recipes():
+
     all_recipes = recipes.get_all_recipes()
     return render_template("all_recipes.html", count=len(all_recipes), all_recipes=all_recipes)
 
 
 @app.route("/add_new_recipe", methods=["GET", "POST"])
 def add_new_recipe():
-
     if request.method == "GET":
         return render_template("add_new_recipe.html")
         
@@ -111,19 +117,6 @@ def add_new_recipe():
             return render_template("error.html", message="Failed to save database.")
     
         return render_template("recipe_saved.html")
-
-# Tarpeeton? ########################################################3
-@app.route("/recipe")
-def recipe(id):
-    show_this_recipe = recipes.collect_recipe_items(id)
-    return render_template("recipe.html", show_this_recipe=show_this_recipe)
-
-
-# For generating pages for individual recipes
-@app.route("/<int:id>")
-def page(id):
-    recipe_items = recipes.collect_recipe_items(id)
-    return render_template("recipe.html", recipe_items=recipe_items)
 
 
 @app.route("/admin_tools")

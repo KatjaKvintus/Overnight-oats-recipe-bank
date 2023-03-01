@@ -79,11 +79,9 @@ def list_recipes_by_type(type):
 
 
 # To mark a recipe as a favorite > added to favorites list
-# Should include some kind of icon & need to check if this entry is already in the table
-def mark_recipe_as_favorite(recipe_id):
+# Note: toggling the icon DOES NOT remove the recipe from favorites
+def mark_recipe_as_favorite(recipe_id : int, user_id : int):
 
-    user_id = users.get_user_id()
-    
     try:
         sql = text("""INSERT INTO favorites (user_id, recipe_id) 
         VALUES (:user_id, :recipe_id)""")
@@ -92,5 +90,25 @@ def mark_recipe_as_favorite(recipe_id):
 
     except:
         return False
+    return True
 
-    #return True
+# Returns list of users favorites recipes
+def show_my_favorites(user_id):
+
+    print("DEBUG recipes.py 1: id on ", id ) #########################################
+    try:
+        sql = text("SELECT DISTINCT "+
+                   "recipes.* "+
+                   "FROM favorites "+
+                   "INNER JOIN recipes ON (favorites.recipe_id = recipes.id)"+
+                   "WHERE favorites.user_id = :user_id")
+        
+        result = db.session.execute(sql, {"user_id":user_id})
+        favorite_list = result.fetchall()
+
+        print("DEBUG recipes.py 2: listan pituus on ", len(favorite_list) ) #########################################
+
+    except:
+        return "Error - no favorites found"
+    
+    return favorite_list

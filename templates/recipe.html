@@ -1,13 +1,28 @@
 {% extends "layout.html" %}
-
 {% block content %}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+<script>
+    function change_heart_color() {
+        let icon = document.getElementById("heart");
+        if (icon.style.color == "black") {
+            icon.style.color = "red";
+        }
+        else if (icon.style.color == "red") {
+            icon.style.color = "black";
+        }
+    }
+</script>
 
 <hr>
 <h3>{{ show_this_recipe[1] }}</h3>
 <i>Type: {{ show_this_recipe[2] }}</i><BR><BR>
 <b>Ingredients</b>:<BR>
 1 dl {{ show_this_recipe[4] }}<BR>
-1 dl {{ show_this_recipe[5] }}<BR>
+1 dl {{ show_this_recipe[5] }}<BR>S
 0,25 - 0,5 dl {{ show_this_recipe[6] }}<BR>
 0,5 - 1 dl {{ show_this_recipe[7] }}<BR>
 0,5 - 1 dl {{ show_this_recipe[8] }}<BR>
@@ -19,7 +34,22 @@ Cover the bowl with a lid and keep in a refridgerator 1-2 hours or over night.<B
 Enjoy!
 <BR><BR>
 </hr>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+Add as favorite:<BR>
+
+<form action="/favorite" method="post">
+<button type="subit" onclick="change_heart_color()">
+<span id="heart" style="color:black;">&#9829;</span>
+</button>
+<input type="hidden" name="favorite" value="{{ show_this_recipe[0] }}"><BR>
+
 <a href="/mainpage">Return to main page</a><BR>
 <a href="/logout">Log out</a>
+</form>
+
+</body>
+</html>
 
 {% endblock %}

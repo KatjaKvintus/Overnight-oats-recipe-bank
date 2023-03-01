@@ -18,7 +18,7 @@ Sovelluksessa on seuraavat toiminnot:
 - Sisäänkirjauneen käyttäjän nimen näyttäminen main pagella
 - Käyttäjän sisään- ja uloskirjautuminen
 - Uuden tuorepuuroreseptin tallennus tietokantaan
-- Haku resepteistä joko otsikon tai raaka-aineen perusteella
+- Haku resepteistä tyypin, otsikon tai raaka-aineen perusteella
 - Viimeisimmän kantaan syötetyn reseptin näyttäminen main pagella (kunhan ensimmäinen resepti on syötetty tietokantaan)
 - Lista tietokannassa olevista resepteista (tykkäysnappi puuttuu)
 

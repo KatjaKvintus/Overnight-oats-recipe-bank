@@ -39,7 +39,7 @@ def register():
         password2 = request.form["password2"]
     
     if users.username_taken(username):
-        return render_template("error.html", message="This username is taken. Please choose another one.")        
+        return render_template("error.html", message="This username is taken. Please choose another one.")
 
     if password1 != password2:
         return render_template("error.html", message="Passwords don't match. Please type the sama password twice.")
@@ -74,6 +74,8 @@ def search_function():
 
     recipe_amount = len(list_of_search_matching_recipes)
 
+    print("DEGUB routes.py: lista sisältää ", recipe_amount, " itemiä. ") ###########################################
+
     return render_template("search_results.html", recipe_amount=recipe_amount, list_of_search_matching_recipes=list_of_search_matching_recipes)
 
 
@@ -93,9 +95,7 @@ def page():
 
 @app.route("/recipe_type", methods=["GET", "POST"])
 def type():
-
     type = request.form["type"]    
-
     if type != None:
         list_of_search_matching_recipes = recipes.list_recipes_by_type(type)
         recipe_amount = len(list_of_search_matching_recipes)
@@ -104,9 +104,9 @@ def type():
 
 @app.route("/all_recipes", methods=["GET", "POST"])
 def all_recipes():
-
-    all_recipes = recipes.get_all_recipes()
-    return render_template("all_recipes.html", count=len(all_recipes), all_recipes=all_recipes)
+    list_of_search_matching_recipes = recipes.get_all_recipes()
+    recipe_amount = len(list_of_search_matching_recipes)
+    return render_template("search_results.html", recipe_amount=recipe_amount, list_of_search_matching_recipes=list_of_search_matching_recipes)
 
 
 @app.route("/add_new_recipe", methods=["GET", "POST"])
@@ -131,6 +131,29 @@ def add_new_recipe():
             return render_template("error.html", message="Failed to save database.")
     
         return render_template("recipe_saved.html")
+
+
+@app.route("/favorite", methods=["GET", "POST"])
+def favorites():
+    user_id = users.get_user_id()
+
+    if request.method == "POST":
+        recipe_id = request.form["favorite"]
+        recipe_id = int(recipe_id)
+
+    if recipes.mark_recipe_as_favorite(recipe_id, user_id):
+        return "Favorite saved! (Click back button on your browser to return to the recipe.)"
+
+    else:
+        return render_template("error.html", message="Not succesfull")
+
+
+@app.route("/my_favorites", methods=["GET", "POST"])
+def my_favorites():
+    user_id = users.get_user_id()
+    list_of_search_matching_recipes = recipes.show_my_favorites(user_id)
+    recipe_amount = len(list_of_search_matching_recipes)
+    return render_template("search_results.html", recipe_amount=recipe_amount, list_of_search_matching_recipes=list_of_search_matching_recipes)
 
 
 @app.route("/admin_tools")

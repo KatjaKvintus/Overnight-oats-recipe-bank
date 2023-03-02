@@ -11,7 +11,7 @@ Sovellus tarjoaa käyttäjälle tuorepuuroreseptitietokannan, josta käyttäjä 
 - syöttää tietokantaan oman tuorepuuroreseptin
 
 
-## Sovelluksen tilanne 25.2.2023:
+## Sovelluksen tilanne 2.3.2023:
 
 Sovelluksessa on seuraavat toiminnot:
 - Uuden käyttäjän luominen
@@ -21,11 +21,13 @@ Sovelluksessa on seuraavat toiminnot:
 - Haku resepteistä tyypin, otsikon tai raaka-aineen perusteella
 - Viimeisimmän kantaan syötetyn reseptin näyttäminen main pagella (kunhan ensimmäinen resepti on syötetty tietokantaan)
 - Lista tietokannassa olevista resepteista (tykkäysnappi puuttuu)
+- Reseptin merkitseminen suosikiksi
+- Omien suosikkireseptien listaus
+- Kommenttien näyttäminen reseptin yhteydessä
+- Uuden kommentin lisääminen
 
 Puuttuu:
-- Reseptin merkitseminen suosikiksi
 - Reseptin arvostelu
-- Reseptin kommentoiminen
 - Viikon reseptin julkaiseminen
 - Pääkäyttäjän toiminnot (saattaa jäädä kokonaan pois)
 - Ulkoasun säätäminen

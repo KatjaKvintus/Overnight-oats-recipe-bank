@@ -1,6 +1,5 @@
 from db import db
 from sqlalchemy.sql import text
-import users
 
 
 def save_new_recipe(name, type, author_id, base_liquid, grain, protein, ingredient_1, ingredient_2, sweetener):
@@ -95,20 +94,18 @@ def mark_recipe_as_favorite(recipe_id : int, user_id : int):
 # Returns list of users favorites recipes
 def show_my_favorites(user_id):
 
-    print("DEBUG recipes.py 1: id on ", id ) #########################################
     try:
         sql = text("SELECT DISTINCT "+
                    "recipes.* "+
                    "FROM favorites "+
-                   "INNER JOIN recipes ON (favorites.recipe_id = recipes.id)"+
+                   "INNER JOIN recipes ON (favorites.recipe_id = recipes.id) " +
                    "WHERE favorites.user_id = :user_id")
         
         result = db.session.execute(sql, {"user_id":user_id})
         favorite_list = result.fetchall()
 
-        print("DEBUG recipes.py 2: listan pituus on ", len(favorite_list) ) #########################################
-
     except:
         return "Error - no favorites found"
     
     return favorite_list
+

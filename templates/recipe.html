@@ -32,22 +32,38 @@ Peel and chop/grate fruits/vegetables.<BR><BR>
 Add all ingredients to the bowl and mix well. <BR><BR>
 Cover the bowl with a lid and keep in a refridgerator 1-2 hours or over night.<BR><BR>
 Enjoy!
-<BR><BR>
-</hr>
+<BR><BR><BR>
+<hr>
+<b>{{ note }}</b><BR><BR>
+
+{% for comment in recipe_comments %}
+<i>User {{ comment[4] }} commented:</i><BR><BR>
+{{ comment[3] }}<BR>
+<hr>
+{% endfor %}
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-Add as favorite:<BR>
+<BR><b>Add as favorite:</b><BR>
 
 <form action="/favorite" method="post">
 <button type="subit" onclick="change_heart_color()">
 <span id="heart" style="color:black;">&#9829;</span>
 </button>
-<input type="hidden" name="favorite" value="{{ show_this_recipe[0] }}"><BR>
+<input type="hidden" name="favorite" value="{{ show_this_recipe[0] }}"><BR><BR>
+</form>
 
+<B>Comment this recipe:</B>
+<form action="/add_comment" method="post"><BR>
+<input type="hidden" name="recipe_id" value="{{ show_this_recipe[0] }}"> <BR>
+<textarea id="new_comment" name="new_comment" rows="4" cols="50" required></textarea><BR>
+<input type="submit" value="Save">
+</form>
+
+<BR>
 <a href="/mainpage">Return to main page</a><BR>
 <a href="/logout">Log out</a>
-</form>
+
 
 </body>
 </html>

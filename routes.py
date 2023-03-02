@@ -2,7 +2,7 @@ from app import app
 from flask import redirect, render_template, request, session
 import users
 import recipes
-import db
+import comments
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -74,8 +74,6 @@ def search_function():
 
     recipe_amount = len(list_of_search_matching_recipes)
 
-    print("DEGUB routes.py: lista sisältää ", recipe_amount, " itemiä. ") ###########################################
-
     return render_template("search_results.html", recipe_amount=recipe_amount, list_of_search_matching_recipes=list_of_search_matching_recipes)
 
 
@@ -90,7 +88,15 @@ def page():
     if request.method == "POST":
         id = request.form["this_is_recipe_id"]
         show_this_recipe = recipes.collect_recipe_items(id)
-        return render_template("recipe.html", id=id, show_this_recipe=show_this_recipe)
+        recipe_comments = comments.show_comments(id)
+    
+    if len(recipe_comments) == 0:
+        note = "No comments yet. Be the first one?"
+    else:
+        note = "Comments for this recipe: " + str(len(recipe_comments)) + " pcs"
+
+    
+    return render_template("recipe.html", id=id, show_this_recipe=show_this_recipe, recipe_comments=recipe_comments, note=note)
 
 
 @app.route("/recipe_type", methods=["GET", "POST"])
@@ -154,6 +160,29 @@ def my_favorites():
     list_of_search_matching_recipes = recipes.show_my_favorites(user_id)
     recipe_amount = len(list_of_search_matching_recipes)
     return render_template("search_results.html", recipe_amount=recipe_amount, list_of_search_matching_recipes=list_of_search_matching_recipes)
+
+
+
+
+
+@app.route("/add_comment", methods=["GET", "POST"])
+def add_comment():
+
+    user_id = users.get_user_id()
+
+    if request.method == "POST":
+        new_comment = request.form["new_comment"]
+        recipe_id = request.form["recipe_id"]
+    
+    result = comments.add_comment(user_id, recipe_id, new_comment)
+
+    if not result:
+        return render_template("error.html", message="Failed to add comment")
+    else:
+        return render_template("comment_saved.html")
+
+
+
 
 
 @app.route("/admin_tools")

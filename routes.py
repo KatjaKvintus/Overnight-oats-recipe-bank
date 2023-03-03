@@ -3,6 +3,7 @@ from flask import redirect, render_template, request, session
 import users
 import recipes
 import comments
+from random import randint
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -162,9 +163,6 @@ def my_favorites():
     return render_template("search_results.html", recipe_amount=recipe_amount, list_of_search_matching_recipes=list_of_search_matching_recipes)
 
 
-
-
-
 @app.route("/add_comment", methods=["GET", "POST"])
 def add_comment():
 
@@ -180,7 +178,23 @@ def add_comment():
         return render_template("error.html", message="Failed to add comment")
     else:
         return render_template("comment_saved.html")
+    
 
+
+@app.route("/random")
+def random():
+
+    amount_of_recipes = len(recipes.get_all_recipes())
+    id = randint(1, amount_of_recipes)              # Random recipe id
+    show_this_recipe = recipes.collect_recipe_items(id)
+    recipe_comments = comments.show_comments(id)
+    
+    if len(recipe_comments) == 0:
+        note = "No comments yet. Be the first one?"
+    else:
+        note = "Comments for this recipe: " + str(len(recipe_comments)) + " pcs"
+    
+    return render_template("recipe.html", id=id, show_this_recipe=show_this_recipe, recipe_comments=recipe_comments, note=note)
 
 
 

@@ -22,7 +22,13 @@
 <form action="/search_function" method="GET">
 <b>Search from recipe names: </b><input type="text" name="query1"><BR>
 <b>Search from recipe ingredients: </b><input type="text" name="query2"><BR><BR>
-<input type="submit" value="Search">
+<b>Search from recipe ingredients: </b><input type="text" name="query2"><BR><BR>
+<input type="submit" value="Search"><BR><BR>
+</form>
+
+<b>I don't know what I want! Show me a random recipe.</b><BR>
+<form action="/random">
+<input type="submit" value="A random recipe">
 </form>
 
 {% endblock %}

@@ -3,7 +3,7 @@ _(Tietokantasovellus-kurssi, kevät 2023)_
 
 
 Sovellus tarjoaa käyttäjälle tuorepuuroreseptitietokannan, josta käyttäjä voi: 
-- hakea reseptejä nimellä tai ainesosalla
+- hakea reseptejä nimellä, tyypillä tai ainesosalla
 - lukea reseptejä
 - tykätä resepteistä, jolloin resepti tallentuu omien tykättyjen reseptien listaan
 - kommentoida reseptejä
@@ -11,7 +11,7 @@ Sovellus tarjoaa käyttäjälle tuorepuuroreseptitietokannan, josta käyttäjä 
 - syöttää tietokantaan oman tuorepuuroreseptin
 
 
-## Sovelluksen tilanne 2.3.2023:
+## Sovelluksen tilanne 3.3.2023:
 
 Sovelluksessa on seuraavat toiminnot:
 - Uuden käyttäjän luominen
@@ -19,6 +19,7 @@ Sovelluksessa on seuraavat toiminnot:
 - Käyttäjän sisään- ja uloskirjautuminen
 - Uuden tuorepuuroreseptin tallennus tietokantaan
 - Haku resepteistä tyypin, otsikon tai raaka-aineen perusteella
+- Satunnaisen reseptin arpominen (osana hakutoimintoja)
 - Viimeisimmän kantaan syötetyn reseptin näyttäminen main pagella (kunhan ensimmäinen resepti on syötetty tietokantaan)
 - Lista tietokannassa olevista resepteista (tykkäysnappi puuttuu)
 - Reseptin merkitseminen suosikiksi
@@ -27,7 +28,7 @@ Sovelluksessa on seuraavat toiminnot:
 - Uuden kommentin lisääminen
 
 Puuttuu:
-- Reseptin arvostelu
+- Reseptin arvostelu (tähtiluokitus)
 - Viikon reseptin julkaiseminen
 - Pääkäyttäjän toiminnot (saattaa jäädä kokonaan pois)
 - Ulkoasun säätäminen

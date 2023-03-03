@@ -3,14 +3,15 @@
 {% block content %}
 <BR><BR>
 <h2>Add a new recipe</h2>
+<body>
 
-<form action="/add_new_recipe" method="post">
+<form action="/add_new_recipe" method="post" onsubmit="return check(this)">
 
-    Recipe name: <input type="text" name="name" minlength="5"> <BR><BR>
+    Recipe name: <input type="text" name="title"> <BR><BR>
     <b>Type: </b><br>
     <input type="radio" name="type" value="delicacy"> delicacy<BR>
     <input type="radio" name="type" value="gluten free"> gluten free<BR>
-    <input type="radio" name="type" value="healthy"> healthy<BR>   
+    <input type="radio" name="type" Value="healthy"> healthy<BR>   
     <input type="radio" name="type" value="power food"> power food<BR>
     <input type="radio" name="type" value="vegan"> vegan<BR><BR>
     
@@ -61,6 +62,51 @@
     <BR><input type="submit" value="Save to the database">
     </form>
 
+
+<script>
+function check(form) {
+    if (form.title.value.length > 40) {
+        alert("Error: too long title! Maximum length is 40 characters. Tip: include only  main ingredient names in the title.");
+        return false;
+    }
+    if (form.title.value.length < 4) {
+        alert("Error: too short title! Minimum length is 40 characters. Idea: include main ingredient names in the title.");
+        return false;
+    }
+    if(form.type.value == "") {
+        alert("Please choose a type for this recipe.");
+        return false;
+    }
+    if(form.base_liquid.value == "") {
+        alert("Please choose the liquid base for this recipe.");
+        return false;
+    }
+    if(form.ingredient_1.value == "") {
+        alert("Please choose the ingredient 1 for this recipe.");
+        return false;
+    }
+    if(form.ingredient_2.value == "") {
+        alert("Please choose the ingredient 2 for this recipe.");
+        return false;
+    }
+    if(form.grain.value == "") {
+        alert("Please choose the grain for this recipe.");
+        return false;
+    }
+    if(form.protein.value == "") {
+        alert("Please choose the protein for this recipe.");
+        return false;
+    }
+    if(form.sweetener.value == "") {
+        alert("Please choose the sweetener for this recipe.");
+        return false;
+    }
+    return true;
+}
+</script>
+
+
+
 <form action="\mainpage.html"></form>
     <input type="submit" value="Return to the main page">
 </form>
@@ -68,3 +114,4 @@
 <a href="/logout">Log out</a>
 
 {% endblock %}
+</body>

@@ -39,14 +39,23 @@ def register():
         password1 = request.form["password1"]
         password2 = request.form["password2"]
     
+    if len(username) < 3:
+        return render_template("error.html", message="This username is too short. Please choose one that has at least 3 characters.")
+    
+    if len(username) > 20:
+        return render_template("error.html", message="This username is too long. Please choose one that has maximum 20 characters.")
+    
     if users.username_taken(username):
         return render_template("error.html", message="This username is taken. Please choose another one.")
 
     if password1 != password2:
         return render_template("error.html", message="Passwords don't match. Please type the sama password twice.")
     
+    if len(password1) < 3:
+        return render_template("error.html", message="This password is too short. Please choose one that has at least 3 characters.")    
+    
     if not users.create_new_account(username, password1):
-        return render_template("error.html", message="Failed to create user account")
+        return render_template("error.html", message="Failed to create the user account.")
 
     return redirect("/mainpage")
 
@@ -122,7 +131,7 @@ def add_new_recipe():
         return render_template("add_new_recipe.html")
         
     if request.method == "POST":      
-        name = request.form["name"]
+        name = request.form["title"]
         type = request.form["type"]
         author_id = users.get_user_id()
         base_liquid = request.form["base_liquid"]
@@ -131,6 +140,9 @@ def add_new_recipe():
         ingredient_1 = request.form["ingredient_1"]
         ingredient_2 = request.form["ingredient_2"]
         sweetener = request.form["sweetener"]
+
+        if len(name) > 40:
+            return render_template("error.html", message="Recipe name is too long. Please choose one that has maximum 40 characters.")
 
         result = recipes.save_new_recipe(name, type, author_id, base_liquid, grain, protein, ingredient_1, ingredient_2, sweetener)
 
@@ -172,6 +184,9 @@ def add_comment():
         new_comment = request.form["new_comment"]
         recipe_id = request.form["recipe_id"]
     
+    if len(new_comment) > 1000:
+            return render_template("error.html", message="Your comment is too long. Please shorten it to maximum 1000 characters.")
+
     result = comments.add_comment(user_id, recipe_id, new_comment)
 
     if not result:

@@ -1,9 +1,12 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<p>Welcome, {{ session.user_name }}!</p>  <a href="/logout">(Log out)</a><BR><BR>
+<p>Welcome, {{ session.user_name }} <i>({{ session.user_role }})!</i></p>
+<a href="/logout">(Log out)</a><BR><BR>
 
 <BR>
+<hr>
+<h3>Main functionalities:</h3>
 
 <form action="/add_new_recipe">
 <input type="submit" value="Add a new recipe">
@@ -21,27 +24,36 @@
 <input type="submit" value="My favorites">
 </form>
 
-<input type="button" value="Recipe of the week">[NOTE: button not functional!]<BR><BR>
+<form action="/admin_tools" onsubmit="return check(this)">
+<input type="hidden" name="admin_tools" value="{{ session.user_role }}">
+<input type="submit" value="Admin tools">
+</form>
+
+<script>
+function check(form) {
+    if (form.admin_tools.value != "admin") {
+        alert("Error: this function is only for admins.");
+        return false;
+    }
+    return true;
+}
+</script>
 
 
-<hr>
-<b>Latest recipe in the database:</b><BR><BR>
-<h3>{{ latest_recipe[1] }}</h3>
-<i>Type: {{ latest_recipe[2] }}</i><BR><BR>
-<b>Ingredients</b>:<BR>
-1 dl {{ latest_recipe[4] }}<BR>
-1 dl {{ latest_recipe[5] }}<BR>
-0,25 - 0,5 dl {{ latest_recipe[6] }}<BR>
-0,5 - 1 dl {{ latest_recipe[7] }}<BR>
-0,5 - 1 dl {{ latest_recipe[8] }}<BR>
-0,5 - 1 tbs {{ latest_recipe[9] }}<BR><BR><BR>
+<BR><hr>
+<h3>Check the highlights:</h3>
 
-Peel and chop/grate fruits/vegetables.<BR><BR>
-Add all ingredients to the bowl and mix well. <BR><BR>
-Cover the bowl with a lid and keep in a refridgerator 1-2 hours or over night.<BR><BR>
-Enjoy!
+<form action="/page", method="post">
+<input type="submit" value="The recipe of the week">
+<input type="hidden" name="this_is_recipe_id" value="{{ index_for_recipe_of_the_week }}">
+</form>
 
-</hr>
+<form action="/page", method="post">
+<input type="submit" value="The latest recipe">
+<input type="hidden" name="this_is_recipe_id" value="{{ latest_recipe[0] }}">
+</form>
+
+
 
 {% endblock %}
 

@@ -38,6 +38,13 @@ def register():
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
+        user_type = request.form["user_type"]
+        admin_key = request.form["admin_key"]
+
+    correct_admin_key = users.get_admin_key()
+
+    if user_type == "admin" and admin_key != correct_admin_key:
+        return render_template("error.html", message="Incorrect admin key. Please check the spelling.")    
     
     if len(username) < 3:
         return render_template("error.html", message="This username is too short. Please choose one that has at least 3 characters.")
@@ -54,7 +61,7 @@ def register():
     if len(password1) < 3:
         return render_template("error.html", message="This password is too short. Please choose one that has at least 3 characters.")    
     
-    if not users.create_new_account(username, password1):
+    if not users.create_new_account(username, password1, user_type):
         return render_template("error.html", message="Failed to create the user account.")
 
     return redirect("/mainpage")
@@ -62,8 +69,9 @@ def register():
 
 @app.route("/mainpage", methods=["GET", "POST"])
 def mainpage():
-    latest_recipe_items = recipes.show_latest_recipe()
-    return render_template("mainpage.html", latest_recipe=latest_recipe_items)
+    latest_recipe = recipes.show_latest_recipe()
+    index_for_recipe_of_the_week = recipes.get_index_for_the_latest_recipe_of_the_week()
+    return render_template("mainpage.html", latest_recipe=latest_recipe, index_for_recipe_of_the_week=index_for_recipe_of_the_week)
 
 
 @app.route("/search")
@@ -105,7 +113,6 @@ def page():
     else:
         note = "Comments for this recipe: " + str(len(recipe_comments)) + " pcs"
 
-    
     return render_template("recipe.html", id=id, show_this_recipe=show_this_recipe, recipe_comments=recipe_comments, note=note)
 
 
@@ -195,7 +202,6 @@ def add_comment():
         return render_template("comment_saved.html")
     
 
-
 @app.route("/random")
 def random():
 
@@ -212,8 +218,6 @@ def random():
     return render_template("recipe.html", id=id, show_this_recipe=show_this_recipe, recipe_comments=recipe_comments, note=note)
 
 
-
-
 @app.route("/admin_tools")
 def admin_tools():
     return render_template("admin_tools.html")
@@ -228,3 +232,20 @@ def form():
 def logout():
     users.log_out()
     return render_template("logout.html")
+
+
+@app.route("/check_all_recipes")
+def check_all_recipes():
+    recipe_list = recipes.get_all_recipes()
+    list_size = len(recipe_list)
+    return render_template("recipe_of_the_week.html", recipe_list=recipe_list, list_size=list_size)
+
+
+@app.route("/set_recipe_of_the_week", methods=["GET", "POST"])
+def recipe_of_the_week():
+
+    recipe_id = request.form["recipe_id"]
+    recipes.set_recipe_of_the_week(recipe_id)
+
+    return render_template("succesfull_message.html", message="New recipe of the week published.")
+

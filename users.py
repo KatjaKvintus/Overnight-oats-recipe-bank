@@ -5,6 +5,11 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy.sql import text
 
 
+admin_key = "YouCantGuessTh1$"
+
+def get_admin_key():
+    return "YouCantGuessTh1$"
+
 def get_user_id():
     return session.get("user_id", 0)
 
@@ -24,17 +29,17 @@ def log_in_user(name, password):
     
     session["user_id"] = user[0]
     session["user_name"] = name
-    #session["user_role"] = user[2]
+    session["user_role"] = user[2]
     session["csrf_token"] = os.urandom(16).hex()
 
     return True   
 
 
 # Creates new user account and directs to login
-def create_new_account(name, password):
+def create_new_account(name, password, user_type):
 
     hash_value = generate_password_hash(password)
-    role = "user"
+    role = user_type
 
     try:
         sql = text("""INSERT INTO users (name, password, role) 

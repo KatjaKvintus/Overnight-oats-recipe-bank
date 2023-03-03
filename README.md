@@ -26,11 +26,11 @@ Sovelluksessa on seuraavat toiminnot:
 - Omien suosikkireseptien listaus
 - Kommenttien näyttäminen reseptin yhteydessä
 - Uuden kommentin lisääminen
+- Admin-sivu, jossa on toistaiseksi yksi toiminto: viikon reseptin julkaiseminen
+
 
 Puuttuu:
 - Reseptin arvostelu (tähtiluokitus)
-- Viikon reseptin julkaiseminen
-- Pääkäyttäjän toiminnot (saattaa jäädä kokonaan pois)
 - Ulkoasun säätäminen
 - Tietoturva-asioiden huomioonottaminen
 - Ohjaavat virheilmoitukset ja virheiden käsittely tilanteissa, joissa käyttäjä yrittää käyttää sovellusta väärin

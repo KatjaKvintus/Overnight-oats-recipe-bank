@@ -34,10 +34,11 @@ Cover the bowl with a lid and keep in a refridgerator 1-2 hours or over night.<B
 Enjoy!
 <BR><BR><BR>
 <hr>
-<b>{{ note }}</b><BR><BR>
+<b>{{ note }}</b><BR>
+<hr><BR>
 
 {% for comment in recipe_comments %}
-<i>User {{ comment[4] }} commented:</i><BR><BR>
+<i>{{ comment[4] }}:</i><BR><BR>
 {{ comment[3] }}<BR>
 <hr>
 {% endfor %}
@@ -57,14 +58,24 @@ Enjoy!
 <form action="/add_comment" method="post" onsubmit="return check(this)"><BR>
 <input type="hidden" name="recipe_id" value="{{ show_this_recipe[0] }}"> <BR>
 <textarea id="new_comment" name="new_comment" rows="4" cols="50" required></textarea><BR>
-<input type="submit" value="Save">
+<input type="submit" value="Save"><BR><BR>
 </form>
+
+<B>Review this recipe:</B><BR>
+<form action="/review" method="post">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<span class="fa fa-star"></span>
+<span class="fa fa-star"></span>
+<span class="fa fa-star"></span>
+<span class="fa fa-star"></span>
+<span class="fa fa-star"></span><BR><BR>
 
 <script>
 function check(form) {
     if (form.new_comment.value.length > 1000) {
         alert("Error: your comment is too long. Please shorten it to maximum 1000 characters. Tip: include only  main ingredient names in the title.");
         return false;
+    }
     return true;
 }
 </script>

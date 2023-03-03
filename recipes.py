@@ -1,5 +1,6 @@
 from db import db
 from sqlalchemy.sql import text
+from datetime import date
 
 
 def save_new_recipe(name, type, author_id, base_liquid, grain, protein, ingredient_1, ingredient_2, sweetener):
@@ -106,6 +107,47 @@ def show_my_favorites(user_id):
 
     except:
         return "Error - no favorites found"
-    
+
     return favorite_list
 
+
+# Admin function: one of the database recipes can be set as the recipe of the week
+def set_recipe_of_the_week(recipe_id):
+
+    this_date = str(date.today())
+
+    try:
+        sql = text("""INSERT INTO recipe_of_the_week (recipe_id, date) 
+                VALUES (:recipe_id, :date)""")
+
+        db.session.execute(sql, {"recipe_id":recipe_id, "date":this_date})
+        db.session.commit()
+
+    except:
+        return False
+
+    return True
+
+
+# Checks recipe_of_the_week tables lastest entry 
+# and returns the id of that recipe in recipes table
+def get_index_for_the_latest_recipe_of_the_week():
+
+    sql = text("SELECT max(id) AS id FROM recipe_of_the_week")
+    result = db.session.execute(sql)
+    this_recipe = result.fetchone()
+    this_recipe_id = this_recipe[0]
+
+    sql = text("SELECT DISTINCT recipes.* " +
+                "FROM recipe_of_the_week " +
+                "INNER JOIN recipes ON (recipe_of_the_week.recipe_id = recipes.id) " +
+                "WHERE recipe_of_the_week.id = :this_recipe_id")
+
+    result = db.session.execute(sql, {"this_recipe_id":this_recipe_id})
+    recipe = result.fetchone()
+
+    if len(recipe) == 0:
+        return 0
+    else: 
+        index_of_the_latest_one = recipe[0]
+        return index_of_the_latest_one

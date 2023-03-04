@@ -58,12 +58,16 @@ def create_new_account(name, password, user_type):
 # Returns false if this username is unique.
 def username_taken(username):
 
-    sql = text("SELECT name FROM users")
-    result = db.session.execute(sql)
+    sql = text("SELECT name FROM users WHERE name=:username")
+    result = db.session.execute(sql, {"username":username})
     list_of_usernames = result.fetchall()
+    answer = len(list_of_usernames)
     
-    return username in list_of_usernames
-
+    if answer == 0:
+        return False
+    else:
+        return True
+    
 
 # Logging out of app 
 def log_out():

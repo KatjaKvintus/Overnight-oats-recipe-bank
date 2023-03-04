@@ -2,6 +2,10 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<button onclick="window.location.href='/mainpage'"> Return to the main page </button>
+<button onclick="window.location.href='/logout'"> Log out </button>
+<BR><BR>
+
 <h3>Admin tools</h3>
 <BR><BR>
 
@@ -9,10 +13,6 @@
 <input type="submit" value="Publish oatmeal of the week">
 </form><BR>
 
-<form action="\main_page.html"></form>
-<input type="submit" value="Return to the main page"><BR>
-</form>
-<BR><BR>
-<a href="/logout">Log out</a>
+
 
 {% endblock %}

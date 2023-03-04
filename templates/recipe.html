@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<button onclick="window.location.href='/mainpage'"> Return to the main page </button>
+<button onclick="window.location.href='/logout'"> Log out </button>
+
 <!DOCTYPE html>
 
 <html>
@@ -34,7 +37,7 @@ Cover the bowl with a lid and keep in a refridgerator 1-2 hours or over night.<B
 Enjoy!
 <BR><BR><BR>
 <hr>
-<b>{{ note }}</b><BR>
+<b>{{ note }}</b><BR><BR>
 <hr><BR>
 
 {% for comment in recipe_comments %}
@@ -45,14 +48,13 @@ Enjoy!
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<BR><b>Add as favorite:</b><BR>
-
-<form action="/favorite" method="post">
+<BR><b>Add as favorite:</b>
+<form action="/add_favorite" method="post">
 <button type="subit" onclick="change_heart_color()">
 <span id="heart" style="color:black;">&#9829;</span>
 </button>
 <input type="hidden" name="favorite" value="{{ show_this_recipe[0] }}"><BR><BR>
-</form>
+</form><hr>
 
 <B>Comment this recipe:</B>
 <form action="/add_comment" method="post" onsubmit="return check(this)"><BR>
@@ -60,15 +62,6 @@ Enjoy!
 <textarea id="new_comment" name="new_comment" rows="4" cols="50" required></textarea><BR>
 <input type="submit" value="Save"><BR><BR>
 </form>
-
-<B>Review this recipe:</B><BR>
-<form action="/review" method="post">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<span class="fa fa-star"></span>
-<span class="fa fa-star"></span>
-<span class="fa fa-star"></span>
-<span class="fa fa-star"></span>
-<span class="fa fa-star"></span><BR><BR>
 
 <script>
 function check(form) {
@@ -80,9 +73,31 @@ function check(form) {
 }
 </script>
 
-<BR>
-<a href="/mainpage">Return to main page</a><BR>
-<a href="/logout">Log out</a>
+<hr>
+{{ rating_text }}<BR><BR>
+<B>Review this recipe:</B><BR>
+<i>Scale: 1-5</i><BR>
+<form action="/review" method="POST" onsubmit="return check(this)">
+<input type="radio" name="stars" value="1"> 1 star <span class="star">★</span><BR>
+<input type="radio" name="stars" value="2"> 2 stars <span class="star">★★</span><BR>
+<input type="radio" name="stars" value="3"> 3 stars <span class="star">★★★</span><BR>
+<input type="radio" name="stars" value="4"> 4 stars <span class="star">★★★★</span><BR>
+<input type="radio" name="stars" value="5"> 5 stars <span class="star">★★★★★</span><BR>
+<input type="hidden" name="recipe_id" value="{{ show_this_recipe[0] }}"><BR><BR>
+<input type="submit" value="Rate">
+</form>
+
+
+<script>
+function check(form) {
+    if (form.stars.value == "") {
+        alert("Please give the rating.");
+        return false;
+    }
+    return true;
+}
+</script>
+
 
 
 </body>

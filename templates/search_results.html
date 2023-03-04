@@ -2,14 +2,11 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h2>Recipe search</h2>
-<BR><BR>
-
-<a href="/mainpage">Return to main page</a><BR>
-<a href="/logout">Log out</a><BR><BR>
+<button onclick="window.location.href='/mainpage'"> Return to the main page </button>
+<button onclick="window.location.href='/logout'"> Log out </button><BR><BR>
 
 
-Recipes found: {{ recipe_amount }} <BR><BR>
+<h3>Recipes found: {{ recipe_amount }} </h3><BR><BR>
 {% for recipe in list_of_search_matching_recipes %}
 <hr> 
 <b>{{ recipe[1] }}</b>

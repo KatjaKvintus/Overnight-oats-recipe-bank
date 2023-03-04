@@ -1,8 +1,7 @@
 from app import app
 from flask import redirect, render_template, request, session
-import users
-import recipes
-import comments
+import users, recipes, comments
+import stars
 from random import randint
 
 
@@ -13,7 +12,7 @@ def index():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    
+
     if request.method == "GET":
         return render_template("login.html")
 
@@ -21,10 +20,13 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
+    if not users.username_taken(username):
+        return render_template("error.html", message="this username does not exist.")
+
     # Check if the username exists and matches with the password
     if not users.log_in_user(username, password):
-        return render_template("error.html", message="Incorrect username or password")
-    
+        return render_template("error.html", message="incorrect username or password")
+
     return redirect("/mainpage")
 
 
@@ -45,22 +47,22 @@ def register():
 
     if user_type == "admin" and admin_key != correct_admin_key:
         return render_template("error.html", message="Incorrect admin key. Please check the spelling.")    
-    
+
     if len(username) < 3:
         return render_template("error.html", message="This username is too short. Please choose one that has at least 3 characters.")
-    
+
     if len(username) > 20:
         return render_template("error.html", message="This username is too long. Please choose one that has maximum 20 characters.")
-    
+
     if users.username_taken(username):
         return render_template("error.html", message="This username is taken. Please choose another one.")
 
     if password1 != password2:
         return render_template("error.html", message="Passwords don't match. Please type the sama password twice.")
-    
+
     if len(password1) < 3:
         return render_template("error.html", message="This password is too short. Please choose one that has at least 3 characters.")    
-    
+
     if not users.create_new_account(username, password1, user_type):
         return render_template("error.html", message="Failed to create the user account.")
 
@@ -69,10 +71,20 @@ def register():
 
 @app.route("/mainpage", methods=["GET", "POST"])
 def mainpage():
-    latest_recipe = recipes.show_latest_recipe()
-    index_for_recipe_of_the_week = recipes.get_index_for_the_latest_recipe_of_the_week()
-    return render_template("mainpage.html", latest_recipe=latest_recipe, index_for_recipe_of_the_week=index_for_recipe_of_the_week)
 
+    try:
+        latest_recipe = recipes.show_latest_recipe()
+
+        try:
+            index_for_recipe_of_the_week = recipes.get_index_for_the_latest_recipe_of_the_week()
+        except:
+            index_for_recipe_of_the_week=index_for_recipe_of_the_week = 0
+        return render_template("mainpage.html", latest_recipe=latest_recipe, index_for_recipe_of_the_week=index_for_recipe_of_the_week)
+    except:
+        print("No entries in the database.")
+        latest_recipe = [0] 
+        return render_template("mainpage.html", latest_recipe=latest_recipe, index_for_recipe_of_the_week=index_for_recipe_of_the_week)
+    
 
 @app.route("/search")
 def search():   
@@ -103,17 +115,24 @@ def search_results():
 # Displays individual recipe based in the id number
 @app.route("/page", methods=["GET", "POST"])
 def page():
+
     if request.method == "POST":
         id = request.form["this_is_recipe_id"]
         show_this_recipe = recipes.collect_recipe_items(id)
         recipe_comments = comments.show_comments(id)
-    
+        star_rating = stars.count_stars(id) 
+
     if len(recipe_comments) == 0:
         note = "No comments yet. Be the first one?"
     else:
         note = "Comments for this recipe: " + str(len(recipe_comments)) + " pcs"
+    
+    if star_rating[0] == 0:
+        rating_text = "No reviews yet. Be the first one?"
+    else:
+        rating_text = "Reviews for this recipe: " + str(star_rating[0]) +"/5 from " + str(star_rating[1]) + " reviewers"
 
-    return render_template("recipe.html", id=id, show_this_recipe=show_this_recipe, recipe_comments=recipe_comments, note=note)
+    return render_template("recipe.html", id=id, show_this_recipe=show_this_recipe, recipe_comments=recipe_comments, note=note, rating_text=rating_text)
 
 
 @app.route("/recipe_type", methods=["GET", "POST"])
@@ -136,7 +155,7 @@ def all_recipes():
 def add_new_recipe():
     if request.method == "GET":
         return render_template("add_new_recipe.html")
-        
+
     if request.method == "POST":      
         name = request.form["title"]
         type = request.form["type"]
@@ -155,12 +174,12 @@ def add_new_recipe():
 
         if not result:
             return render_template("error.html", message="Failed to save database.")
-    
+
         return render_template("recipe_saved.html")
 
 
-@app.route("/favorite", methods=["GET", "POST"])
-def favorites():
+@app.route("/add_favorite", methods=["GET", "POST"])
+def add_favorite():
     user_id = users.get_user_id()
 
     if request.method == "POST":
@@ -168,7 +187,7 @@ def favorites():
         recipe_id = int(recipe_id)
 
     if recipes.mark_recipe_as_favorite(recipe_id, user_id):
-        return "Favorite saved! (Click back button on your browser to return to the recipe.)"
+        return render_template("succesfull_message.html", message="Favorite saved! (Click back button on your browser to return to the recipe.)")
 
     else:
         return render_template("error.html", message="Not succesfull")
@@ -190,7 +209,7 @@ def add_comment():
     if request.method == "POST":
         new_comment = request.form["new_comment"]
         recipe_id = request.form["recipe_id"]
-    
+
     if len(new_comment) > 1000:
             return render_template("error.html", message="Your comment is too long. Please shorten it to maximum 1000 characters.")
 
@@ -200,7 +219,7 @@ def add_comment():
         return render_template("error.html", message="Failed to add comment")
     else:
         return render_template("comment_saved.html")
-    
+
 
 @app.route("/random")
 def random():
@@ -209,12 +228,12 @@ def random():
     id = randint(1, amount_of_recipes)              # Random recipe id
     show_this_recipe = recipes.collect_recipe_items(id)
     recipe_comments = comments.show_comments(id)
-    
+
     if len(recipe_comments) == 0:
         note = "No comments yet. Be the first one?"
     else:
         note = "Comments for this recipe: " + str(len(recipe_comments)) + " pcs"
-    
+
     return render_template("recipe.html", id=id, show_this_recipe=show_this_recipe, recipe_comments=recipe_comments, note=note)
 
 
@@ -249,3 +268,18 @@ def recipe_of_the_week():
 
     return render_template("succesfull_message.html", message="New recipe of the week published.")
 
+
+@app.route("/review", methods=["GET", "POST"])
+def review():
+
+    this_user_id = users.get_user_id()
+
+    if request.method == "POST":
+        this_stars = int(request.form["stars"])
+        this_recipe_id = int(request.form["recipe_id"])
+
+    print("DEBUG: 'user_id' on ", this_user_id, ", 'recipe_id' on ", this_recipe_id, " ja 'stars' on ", this_stars)
+
+    stars.give_stars(this_user_id, this_recipe_id, this_stars)
+
+    return render_template("succesfull_message.html", message="Star rating saved!")

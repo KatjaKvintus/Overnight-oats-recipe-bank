@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 {% extends "layout.html" %}
 {% block content %}
+
+<button onclick="window.location.href='/mainpage'"> Return to the main page </button>
+<button onclick="window.location.href='/logout'"> Log out </button>
 <BR><BR>
-<h2>Add a new recipe</h2>
+
+    <h2>Add a new recipe</h2>
 <body>
 
 <form action="/add_new_recipe" method="post" onsubmit="return check(this)">
@@ -61,7 +65,7 @@
         
     <BR><input type="submit" value="Save to the database">
     </form>
-
+<BR><BR>
 
 <script>
 function check(form) {
@@ -104,14 +108,6 @@ function check(form) {
     return true;
 }
 </script>
-
-
-
-<form action="\mainpage.html"></form>
-    <input type="submit" value="Return to the main page">
-</form>
-
-<a href="/logout">Log out</a>
 
 {% endblock %}
 </body>

@@ -1,8 +1,9 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<p>Welcome, {{ session.user_name }} <i>({{ session.user_role }})!</i></p>
-<a href="/logout">(Log out)</a><BR><BR>
+<p><B>Welcome, {{ session.user_name }} <i>({{ session.user_role }})!</B></i></p>
+<button onclick="window.location.href='/logout'"> Log out </button><BR><BR>
+</a>
 
 <BR>
 <hr>

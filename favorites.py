@@ -20,7 +20,7 @@ def mark_recipe_as_favorite(recipe_id : int, user_id : int):
 def cancel_set_as_favorite(recipe_id : int, user_id : int):
     '''Removes the recipe from users favorites'''
 
-    try: 
+    try:
         sql = text("""DELETE FROM favorites WHERE user_id = :user_id AND recipe_id = :recipe_id""")
         db.session.execute(sql, {"user_id":user_id, "recipe_id":recipe_id})
         db.session.commit()
@@ -30,7 +30,7 @@ def cancel_set_as_favorite(recipe_id : int, user_id : int):
         return False
 
     return True
-    
+
 
 def show_my_favorites(user_id):
     '''Returns list of users favorites recipes'''

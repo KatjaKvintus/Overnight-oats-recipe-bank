@@ -11,6 +11,7 @@
 
 <form action="/check_all_recipes">
 <input type="submit" value="Publish oatmeal of the week">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 
 

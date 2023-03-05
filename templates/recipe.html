@@ -104,7 +104,8 @@ function check(form) {
 <input type="radio" name="stars" value="3"> 3 stars <span class="star">★★★</span><BR>
 <input type="radio" name="stars" value="4"> 4 stars <span class="star">★★★★</span><BR>
 <input type="radio" name="stars" value="5"> 5 stars <span class="star">★★★★★</span><BR>
-<input type="hidden" name="recipe_id" value="{{ show_this_recipe[0] }}"><BR><BR>
+<input type="hidden" name="recipe_id" value="{{ show_this_recipe[0] }}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"><BR><BR>
 <input type="submit" value="Rate">
 </form>
 

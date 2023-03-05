@@ -38,7 +38,7 @@ def show_comments(recipe_id):
 def delete_comment(comment_id):
     '''For admins: to detele a single comment'''
 
-    try: 
+    try:
         sql = text("""DELETE FROM comments WHERE id = :comment_id""")
         db.session.execute(sql, {"comment_id":comment_id})
         db.session.commit()

@@ -138,7 +138,7 @@ def search_results():
     '''Handling search results listing'''
 
     source_route = source_route
-    return render_template("search_results.html")
+    return render_template("search_results.html", source_route=source_route)
 
 
 @app.route("/page", methods=["GET", "POST"])
@@ -149,12 +149,19 @@ def page():
     user_id = users.get_user_id()
 
     if request.method == "POST":
+        
         recipe_id = request.form["this_is_recipe_id"]
-        show_this_recipe = recipes.collect_recipe_items(recipe_id)
-        recipe_comments = comments.show_comments(recipe_id)
-        star_rating = stars.count_stars(recipe_id)
-        recipe_fav_status = favorites.check_favorite_status(recipe_id, user_id)
-        recipe_stars_status = stars.check_if_user_has_given_stars(recipe_id, user_id)
+
+        if recipe_id != "":
+            show_this_recipe = recipes.collect_recipe_items(recipe_id)
+            recipe_comments = comments.show_comments(recipe_id)
+            star_rating = stars.count_stars(recipe_id)
+            recipe_fav_status = favorites.check_favorite_status(recipe_id, user_id)
+            recipe_stars_status = stars.check_if_user_has_given_stars(recipe_id, user_id)
+        else:
+            return render_template("error.html",
+                                message="The database is empty. " +
+                                "Maybe you can be the author of our first recipe?")
 
     if len(recipe_comments) == 0:
         note = "No comments yet. Be the first one?"
@@ -164,7 +171,8 @@ def page():
     if star_rating[0] == 0:
         rating_text = "No reviews yet. Be the first one?"
     else:
-        rating_text = "Reviews for this recipe: " + str(star_rating[0]) + "/5 from " + str(star_rating[1]) + " reviewers"
+        rating_text = "Reviews for this recipe: " + str(star_rating[0]) + "/5 from "
+        rating_text = rating_text + str(star_rating[1]) + " reviewers"
 
     if recipe_stars_status == 1:
         recipe_stars_status = "You have already reviewed this recipe."
@@ -177,10 +185,10 @@ def page():
         recipe_fav_status = "This recipe is not yet in your favorites."
 
     return render_template("recipe.html", recipe_id=recipe_id, show_this_recipe=show_this_recipe,
-                            recipe_comments=recipe_comments, note=note,
-                            rating_text=rating_text, 
-                            recipe_fav_status=recipe_fav_status,
-                            recipe_stars_status=recipe_stars_status)
+                             recipe_comments=recipe_comments, note=note,
+                             rating_text=rating_text,
+                             recipe_fav_status=recipe_fav_status,
+                             recipe_stars_status=recipe_stars_status)
 
 
 @app.route("/recipe_type", methods=["GET", "POST"])
@@ -230,7 +238,7 @@ def add_new_recipe():
         ingredient_1 = request.form["ingredient_1"]
         ingredient_2 = request.form["ingredient_2"]
         sweetener = request.form["sweetener"]
-    
+
     list_of_current_recipe_names = recipes.fetch_recipe_names()
 
     if name in list_of_current_recipe_names:
@@ -306,7 +314,7 @@ def add_comment():
 
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
-        
+
     result = comments.add_comment(user_id, recipe_id, new_comment)
 
     if not result:
@@ -344,7 +352,6 @@ def admin_tools():
 
     if user_role != "admin":
         return render_template("error.html", message="this section is only for users.")
-    
 
     return render_template("admin_tools.html")
 
@@ -359,8 +366,13 @@ def logout():
 @app.route("/check_all_recipes")
 def check_all_recipes():
     '''Provides recipe listing for admins to choose one as the recipe of the week'''
+
     recipe_list = recipes.get_all_recipes()
     list_size = len(recipe_list)
+
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+
     return render_template("recipe_of_the_week.html",
                             recipe_list=recipe_list, list_size=list_size)
 
@@ -386,6 +398,9 @@ def review():
         this_stars = int(request.form["stars"])
         this_recipe_id = int(request.form["recipe_id"])
 
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+
     stars.give_stars(this_user_id, this_recipe_id, this_stars)
 
     return render_template("succesfull_message.html",
@@ -394,6 +409,7 @@ def review():
 
 @app.route("/delete_comment", methods=["GET", "POST"])
 def delete_comment():
+    '''For admin level users to delete comments from recipes'''
 
     if request.method == "POST":
         role = request.form["role"]
@@ -406,6 +422,7 @@ def delete_comment():
 
 @app.route("/change_fav_status", methods=["GET", "POST"])
 def change_fav_status():
+    '''For toggling favorite status on a recipe (off/off)'''
 
     user_id = users.get_user_id()
 

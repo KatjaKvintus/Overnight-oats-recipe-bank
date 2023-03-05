@@ -47,10 +47,10 @@ def check_if_user_has_given_stars(recipe_id, user_id):
                    "WHERE upvotes.user_id = :user_id AND upvotes.recipe_id = :recipe_id")
 
         result = db.session.execute(sql, {"user_id":user_id, "recipe_id":recipe_id})
-        favorite_status_table = result.fetchone()
-        favorite_status = int(favorite_status_table[0])
+        stars_status_table = result.fetchone()
+        stars_status = int(stars_status_table[0])
 
     except SystemError:
         return "Error - no favorites found"
 
-    return favorite_status
+    return stars_status

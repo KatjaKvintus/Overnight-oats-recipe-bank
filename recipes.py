@@ -20,7 +20,7 @@ def save_new_recipe(name, type, author_id, base_liquid, grain, protein,
                                   "sweetener":sweetener})
         db.session.commit()
 
-    except:
+    except SystemError:
         return False
 
     return True
@@ -45,12 +45,17 @@ def collect_recipe_items(id):
 
 
 def show_latest_recipe():
-    '''Collects idividual items from the newest recipe'''
+    '''Collects idividual items from the newest recipe.
+    Returns -1 if the database is empty.'''
 
-    list = get_all_recipes()
-    recipe_id = len(list)
-    return collect_recipe_items(recipe_id)
+    sql = text("SELECT MAX(id) AS latest_recipe_id FROM recipes") 
+    result = db.session.execute(sql, {"id":id})
+    recipe_id_latest = result.fetchone()
 
+    if recipe_id_latest is None:
+        return -1
+
+    return recipe_id_latest
 
 
 def search_recipe_by_name(keyword):
@@ -149,7 +154,5 @@ def fetch_recipe_names():
 
     for item in recipe_list:
         recipe_names.append(item[1])
-    
+
     return recipe_names
-
-

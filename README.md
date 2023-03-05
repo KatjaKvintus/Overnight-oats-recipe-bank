@@ -11,9 +11,9 @@ Sovellus tarjoaa käyttäjälle tuorepuuroreseptitietokannan, josta käyttäjä 
 - syöttää tietokantaan oman tuorepuuroreseptin
 
 
-## Sovelluksen tilanne 5.3.2023:
+## Sovelluksen tilanne 5.3.2023 (kurssin loppupalautus):
 
-Sovelluksessa on seuraavat toiminnot:
+**Sovelluksessa on seuraavat toiminnot:**
 - Uuden käyttäjän luominen
 - Käyttäjän sisään- ja uloskirjautuminen
 - Uuden tuorepuuroreseptin tallennus tietokantaan
@@ -28,9 +28,10 @@ Sovelluksessa on seuraavat toiminnot:
 - Reseptin arvostelu (tähtiluokitus)
 
 
-Puuttuu:
+**Puuttuu:**
 - Ulkoasun säätäminen
-
+- Paljon pylintin ehdottamia korjauksia
+- vieminen tuotantoon (fly.io)
 
 ## Sovelluksen testaaminen
 
@@ -79,19 +80,18 @@ Voit selata, arvostella ja kommentoida reseptejä, merkata niitä omiksi suosike
 
 Uusia reseptejä lisätessäsi huomioithan, että reseptin nimi ei saa löytyä jo valmiiksi tietokannalta. Luontilomakkeella on täytettävät kaikki lomakkeen kohdat.
 
+Testaaminen kannattaa aloittaa luomalla admin-tunnukset, lisäämällä tietokantaan muutama erityyppinen resepti ja sitten julkaisemalla yksi niistä viikon reseptinä. Näin kaikille sovelluksen toiminnoille löytyy dataa jota käsitellä.
 
-## Käyttöliittymä (luonnos)
+
+## Käyttöliittymä
 
 Tältä näytti sovelluksen ensimmäinen luonnostelu käyttöliittymäksi:
 
 ![](https://github.com/KatjaKvintus/Overnight-oats-recipe-bank/blob/master/documents/ui.jpeg)
 
-
+Lopputulos noudattelee suunnitelmaa suurimmaksi osaksi. Merkittävä muutos on, että jokainen sivupohja näytetään erillään ja valikko ei ole kelluva. Admin ei myöskään hyväksy reseptejä julkaisuun vaan ne julkaistaan heti kun käyttäjä lisää ne tietokantaan.
 
 ## Tietokantataulut 
-(havainnekuva)
-
-![](https://github.com/KatjaKvintus/Overnight-oats-recipe-bank/blob/master/documents/tables.jpeg)
 
 Sovelluksessa on seuraavat tietokantataulut:
 - users
@@ -101,16 +101,23 @@ Sovelluksessa on seuraavat tietokantataulut:
 - comments
 - recipe of the week
 
+Alkuperäinen suunnitelma:
+![](https://github.com/KatjaKvintus/Overnight-oats-recipe-bank/blob/master/documents/tables.jpeg)
 
-# Sovelluksen tiedossa olevat puutteet ja ongelmat
+Lopullinen kuvaus:
+![](https://github.com/KatjaKvintus/Overnight-oats-recipe-bank/blob/master/documents/database_model.jpeg)
+
+## Sovelluksen tiedossa olevat puutteet ja ongelmat
+- Reseptipankiksi tässä on yksi perustavaa laatua oleva iso ongelma: käyttäjä ei pääse syöttämään omaa reseptiään kokonaan, vaan hän joutuu valitsemaan ainesosat (varsin suppeasta) listasta. Pidin kuitenkin tästä kiinni, koska kurssin tarkoituksena oli harjoitella nimenomaan tietokantasovellusta, ja rajoittamalla vapaateksisyötteitä sitä oli helpompi hallinnoida. Myös reseptin ohje on geneerinen eikä anna tilaa käyttäjän omille ideoille, esim. "liekitä kaurahiutaleet ennen kulhoon lisäämistä".
 - Jos pääkäyttäjä ei ole julkaissut yhtään viikon reseptiä, pääsivun nappi 'Recipe of the week' ei anna virheilmoitusta vaan näyttää reseptin tyhjän rungon
 - Uutta reseptiä lisätessä sovellus tarkistaa, onko saman nimistä reseptiä jo tietokannassa. Toiminto on toteutettu kömpelösti niin, että html-sivun script ei tunnista virhettä vaan se tulee vasta juuri ennen kantaan viemistä erillisenä virheilmoitussivuna. Lisäksi sovellus hakee kannan kaikki reseptit aina, kun käyttäjä lähtee luomaan uutta reseptiä, mikä on resursseja tuhlaava vaihtoehto, mutta päädyin siihen kun en keksinyt parempaakaan.
 - Sovelluksessa ei ole yksittäistä päävalikkoa, joka näkyisi joka sivulla, vaan se on lisätty erikseen jokaisella html-pohjalle pienin variaatioin
 - Koodissa käytetään useassa kohdassa muuttujanimiä, joilla on myös Python-merkitys, esim. id, type (mutta en uskaltanut lähteä fiksaamaan niitä, koska pelkäsin että deadlinen koittaessa sovellus ei toimi ollenkaan.)
 - Pylintin huomauttamia cyclic importteja ei ole poistettu (sama syy kuin ed. kohdassa)
 
-
-# Jatkokehitysideat
-- Sovelluksen ulkoasussa on kehittämisen varaa
+## Jatkokehitysideat
+- Sovelluksen ulkoasu pitäisi rakentaa visuaaliseksi ja esteettömäksi
 - Päävalikko kelluvaksi joka sivulle
 - Tehokkaammat tietokantahaut (nyt ne on tehty ajatellen pientä tietokantaa, jossa hakujen nopeutta ei ole juuri optimoitu)
+- Uuden reseptin syöttämiseen enemmän valinnanvapautta (valikoiden sijaan vapaatekstikenttiä)
+- Koodin määrää tiiviimmäksi ja tehokkaammaksi

@@ -348,8 +348,6 @@ def admin_tools():
 
     user_role = users.session.user_role
 
-    print("DEBUG: user_role on ", user_role)
-
     if user_role != "admin":
         return render_template("error.html", message="this section is only for users.")
 

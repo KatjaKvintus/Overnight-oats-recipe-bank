@@ -120,3 +120,4 @@ Lopullinen kuvaus:
 - Päävalikko kelluvaksi joka sivulle
 - Tehokkaammat tietokantahaut (nyt ne on tehty ajatellen pientä tietokantaa, jossa hakujen nopeutta ei ole juuri optimoitu)
 - Uuden reseptin syöttämiseen enemmän valinnanvapautta (valikoiden sijaan vapaatekstikenttiä)
+- Koodin määrää tiiviimmäksi ja tehokkaammaksi

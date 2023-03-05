@@ -89,6 +89,8 @@ Tältä näytti sovelluksen ensimmäinen luonnostelu käyttöliittymäksi:
 
 ![](https://github.com/KatjaKvintus/Overnight-oats-recipe-bank/blob/master/documents/ui.jpeg)
 
+Lopputulos noudattelee suunnitelmaa suurimmaksi osaksi. Merkittävä muutos on, että jokainen sivupohja näytetään erillään ja valikko ei ole kelluva. Admin ei myöskään hyväksy reseptejä julkaisuun vaan ne julkaistaan heti kun käyttäjä lisää ne tietokantaan.
+
 ## Tietokantataulut 
 
 Sovelluksessa on seuraavat tietokantataulut:
@@ -104,7 +106,6 @@ Alkuperäinen suunnitelma:
 
 Lopullinen kuvaus:
 ![](https://github.com/KatjaKvintus/Overnight-oats-recipe-bank/blob/master/documents/database_model.jpeg)
-
 
 ## Sovelluksen tiedossa olevat puutteet ja ongelmat
 - Reseptipankiksi tässä on yksi perustavaa laatua oleva iso ongelma: käyttäjä ei pääse syöttämään omaa reseptiään kokonaan, vaan hän joutuu valitsemaan ainesosat (varsin suppeasta) listasta. Pidin kuitenkin tästä kiinni, koska kurssin tarkoituksena oli harjoitella nimenomaan tietokantasovellusta, ja rajoittamalla vapaateksisyötteitä sitä oli helpompi hallinnoida. Myös reseptin ohje on geneerinen eikä anna tilaa käyttäjän omille ideoille, esim. "liekitä kaurahiutaleet ennen kulhoon lisäämistä".

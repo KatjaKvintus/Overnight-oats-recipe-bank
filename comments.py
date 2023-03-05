@@ -33,3 +33,18 @@ def show_comments(recipe_id):
     comment_items = result.fetchall()
 
     return comment_items
+
+
+def delete_comment(comment_id):
+    '''For admins: to detele a single comment'''
+
+    try: 
+        sql = text("""DELETE FROM comments WHERE id = :comment_id""")
+        db.session.execute(sql, {"comment_id":comment_id})
+        db.session.commit()
+
+    except SystemError:
+        print("Comment with this id not found. Nothing has been deleted.")
+        return False
+
+    return True

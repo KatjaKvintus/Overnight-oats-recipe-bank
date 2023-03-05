@@ -11,7 +11,7 @@ Sovellus tarjoaa käyttäjälle tuorepuuroreseptitietokannan, josta käyttäjä 
 - syöttää tietokantaan oman tuorepuuroreseptin
 
 
-## Sovelluksen tilanne 4.3.2023:
+## Sovelluksen tilanne 5.3.2023:
 
 Sovelluksessa on seuraavat toiminnot:
 - Uuden käyttäjän luominen
@@ -61,6 +61,19 @@ Käynnistä sovellus terminaalissa käskyllä
 flask run
 ```
 
+## Käyttöohje
+
+Käynnistä sovellus ja luo uusi käyttäjätili klikkaamalla "Create it here" -linkkiä. Jos sinulla on jo käyttäjätunnukset, voit kirjautua suoraan sisään antamalla käyttäjätunnuksesi ja salasanasi.
+
+Kun olet kirjautunut sisään, näet sovelluksen pääsivulla useita toimintopainikkeita:
+- Add new recipe: lisää uusi resepti tietokantaan
+- List af all recipes: listanäkymä kaikista tietokantaan lisätyistä tuorepuuroresepteistä
+- Recipe search: haku tietokannasta reseptin otsikon, raaka-aineen tai tyypin perusteella
+- My favorites: lista resepteistä, jotka olet merkannut suosikiksesi
+- Admin tools: pääkäyttäjän työkalut 
+- The recipe of the week: näyttää viimeisimmän 'viikon reseptin' (pääkäyttäjän julkaisema)
+- The lates recipe: näyttää tietokantaan viimeisimmäksi lisätyn reseptin
+
 
 ## Käyttöliittymä (luonnos)
 
@@ -80,3 +93,10 @@ Sovelluksessa on seuraavat tietokantataulut:
 - recipes
 - comments
 - recipe of the week
+
+
+# Sovelluksen tiedossa olevat puutteet ja ongelmat
+
+
+# Jatkokehitysideat
+

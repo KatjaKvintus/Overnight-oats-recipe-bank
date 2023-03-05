@@ -6,6 +6,7 @@
 <button onclick="window.location.href='/all_recipes'"> Show all recipes </button>
 <button onclick="window.location.href='/logout'"> Log out </button><BR><BR>
 
+<h3>{{ source_route }}:</h3>
 
 <h3>Recipes found: {{ recipe_amount }} </h3><BR><BR>
 {% for recipe in list_of_search_matching_recipes %}

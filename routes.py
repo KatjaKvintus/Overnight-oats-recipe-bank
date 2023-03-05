@@ -6,6 +6,7 @@ import stars
 import users
 import recipes
 import comments
+import favorites
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -134,6 +135,9 @@ def search_function():
 @app.route("/search_results", methods=["GET", "POST"])
 def search_results():
     '''Handling search results listing'''
+
+    source_route = source_route
+
     return render_template("search_results.html")
 
 
@@ -142,11 +146,14 @@ def page():
     '''Displays individual recipe based in the id number, including comments, reviews
     and function to set the recipe as favorite'''
 
+    user_id = users.get_user_id()
+
     if request.method == "POST":
-        id = request.form["this_is_recipe_id"]
-        show_this_recipe = recipes.collect_recipe_items(id)
-        recipe_comments = comments.show_comments(id)
-        star_rating = stars.count_stars(id)
+        recipe_id = request.form["this_is_recipe_id"]
+        show_this_recipe = recipes.collect_recipe_items(recipe_id)
+        recipe_comments = comments.show_comments(recipe_id)
+        star_rating = stars.count_stars(recipe_id)
+        recipe_fav_status = favorites.check_favorite_status(recipe_id, user_id)
 
     if len(recipe_comments) == 0:
         note = "No comments yet. Be the first one?"
@@ -158,9 +165,15 @@ def page():
     else:
         rating_text = "Reviews for this recipe: " + str(star_rating[0]) + "/5 from " + str(star_rating[1]) + " reviewers"
 
-    return render_template("recipe.html", id=id, show_this_recipe=show_this_recipe,
+    if recipe_fav_status == 1:
+        recipe_fav_status = "This recipe is already in your favorites."
+    else:
+        recipe_fav_status = "This recipe is not yet in your favorites."
+
+    return render_template("recipe.html", recipe_id=recipe_id, show_this_recipe=show_this_recipe,
                             recipe_comments=recipe_comments, note=note,
-                            rating_text=rating_text)
+                            rating_text=rating_text, 
+                            recipe_fav_status=recipe_fav_status)
 
 
 @app.route("/recipe_type", methods=["GET", "POST"])
@@ -171,8 +184,12 @@ def type():
     if type != None:
         list_of_search_matching_recipes = recipes.list_recipes_by_type(type)
         recipe_amount = len(list_of_search_matching_recipes)
+
+    source_route = "Recipes by type"
+
     return render_template("search_results.html", recipe_amount=recipe_amount,
-                            list_of_search_matching_recipes=list_of_search_matching_recipes)
+                            list_of_search_matching_recipes=list_of_search_matching_recipes,
+                            source_route=source_route)
 
 
 @app.route("/all_recipes", methods=["GET", "POST"])
@@ -181,8 +198,12 @@ def all_recipes():
 
     list_of_search_matching_recipes = recipes.get_all_recipes()
     recipe_amount = len(list_of_search_matching_recipes)
+
+    source_route = "All recipes"
+
     return render_template("search_results.html", recipe_amount=recipe_amount,
-                            list_of_search_matching_recipes=list_of_search_matching_recipes)
+                            list_of_search_matching_recipes=list_of_search_matching_recipes,
+                            source_route=source_route)
 
 
 @app.route("/add_new_recipe", methods=["GET", "POST"])
@@ -227,7 +248,7 @@ def add_favorite():
         recipe_id = request.form["favorite"]
         recipe_id = int(recipe_id)
 
-    if recipes.mark_recipe_as_favorite(recipe_id, user_id):
+    if favorites.mark_recipe_as_favorite(recipe_id, user_id):
         return render_template("succesfull_message.html",
                                 message="Favorite saved! " +
                                "(Click back button on your browser to return to the recipe.)")
@@ -241,11 +262,14 @@ def my_favorites():
     '''Listing of logged in users favprites recipes'''
 
     user_id = users.get_user_id()
-    list_of_search_matching_recipes = recipes.show_my_favorites(user_id)
+    list_of_search_matching_recipes = favorites.show_my_favorites(user_id)
     recipe_amount = len(list_of_search_matching_recipes)
+    source_route = "My favorites"
+
     return render_template("search_results.html",
                             recipe_amount=recipe_amount,
-                            list_of_search_matching_recipes=list_of_search_matching_recipes)
+                            list_of_search_matching_recipes=list_of_search_matching_recipes,
+                            source_route=source_route)
 
 
 @app.route("/add_comment", methods=["GET", "POST"])
@@ -338,3 +362,33 @@ def review():
 
     return render_template("succesfull_message.html",
                             message="Star rating saved!")
+
+
+@app.route("/delete_comment", methods=["GET", "POST"])
+def delete_comment():
+
+    if request.method == "POST":
+        role = request.form["role"]
+        del_comment_id = request.form["del_comment_id"]
+
+    if role == "admin":
+        comments.delete_comment(del_comment_id)
+        return "Comment delete successfull"
+
+
+@app.route("/change_fav_status", methods=["GET", "POST"])
+def change_fav_status():
+
+    user_id = users.get_user_id()
+
+    if request.method == "POST":
+        recipe_id = request.form["recipe_id"]
+
+    current_status = int(favorites.check_favorite_status(recipe_id, user_id))
+
+    if current_status == 1:
+        favorites.cancel_set_as_favorite(recipe_id, user_id)
+    else:
+        favorites.mark_recipe_as_favorite(recipe_id, user_id)
+
+    return redirect("/my_favorites")

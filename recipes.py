@@ -88,40 +88,6 @@ def list_recipes_by_type(type):
     return recipes
 
 
-def mark_recipe_as_favorite(recipe_id : int, user_id : int):
-    '''To mark a recipe as a favorite > added to favorites list'''
-
-    try:
-        sql = text("""INSERT INTO favorites (user_id, recipe_id)
-        VALUES (:user_id, :recipe_id)""")
-        db.session.execute(sql, {"user_id":user_id, "recipe_id":recipe_id})
-        db.session.commit()
-
-    except SystemError:
-        return False
-    return True
-
-
-def show_my_favorites(user_id):
-    '''Returns list of users favorites recipes'''
-
-    try:
-        sql = text("SELECT DISTINCT " +
-                   "recipes.* "+
-                   "FROM favorites "+
-                   "INNER JOIN recipes ON (favorites.recipe_id = recipes.id) " +
-                   "WHERE favorites.user_id = :user_id")
-
-        result = db.session.execute(sql, {"user_id":user_id})
-        favorite_list = result.fetchall()
-
-    except SystemError:
-        return "Error - no favorites found"
-
-    return favorite_list
-
-
-
 def set_recipe_of_the_week(recipe_id):
     '''Admin function: one of the database recipes can be set
     as the recipe of the week'''
@@ -172,3 +138,8 @@ def get_index_for_the_latest_recipe_of_the_week():
     else:
         index_of_the_latest_one = recipe[0]
         return index_of_the_latest_one
+
+
+def change_fav_status(recipe_id, user_id):
+    '''Checks if recipe is users favorite or not, and on click changes the status'''
+

@@ -42,19 +42,38 @@ Enjoy!
 
 {% for comment in recipe_comments %}
 <i>{{ comment[4] }}:</i><BR><BR>
-{{ comment[3] }}<BR>
+{{ comment[3] }}<BR><BR>
+<form action="/delete_comment" method="POST" onsubmit="return check_del(this)">
+<input type="submit" name="del_comment" value="Delete this comment">
+<input type="hidden" name="role" value="{{ session.user_role }}">
+<input type="hidden" name="del_comment_id" value="{{ comment[0] }}">
+</form><BR>
+
+<script>
+function check_del(form) {
+    if (form.role.value != "admin") {
+        alert("Error: this function is only for admins. " +
+        "Contact your admin user if you want this comment to be deleted.");
+        return false;
+    }
+return true;
+}
+</script>
+
 <hr>
 {% endfor %}
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<BR><b>Add as favorite:</b>
-<form action="/add_favorite" method="post">
-<button type="subit" onclick="change_heart_color()">
-<span id="heart" style="color:black;">&#9829;</span>
+{{ recipe_fav_status }}<BR>(click to change)
+<form action="/change_fav_status" method="post" >
+<button type="submit" onclick="change_heart_color()">
+<span id="heart" style="color: red;">&#9829;</span>
 </button>
-<input type="hidden" name="favorite" value="{{ show_this_recipe[0] }}"><BR><BR>
-</form><hr>
+<input type="hidden" name="recipe_id" value="{{ show_this_recipe[0] }}">
+<BR><BR>
+</form>
+<hr>
 
 <B>Comment this recipe:</B>
 <form action="/add_comment" method="post" onsubmit="return check(this)"><BR>
@@ -86,7 +105,6 @@ function check(form) {
 <input type="hidden" name="recipe_id" value="{{ show_this_recipe[0] }}"><BR><BR>
 <input type="submit" value="Rate">
 </form>
-
 
 <script>
 function check(form) {

@@ -4,6 +4,7 @@ from flask import session
 from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy.sql import text
 from db import db
+import secrets
 
 
 # This key is needed when creating an admin level user account
@@ -35,7 +36,7 @@ def log_in_user(name, password):
     session["user_id"] = user[0]
     session["user_name"] = name
     session["user_role"] = user[2]
-    session["csrf_token"] = os.urandom(16).hex()
+    session["csrf_token"] = secrets.token_hex(16)
 
     return True
 

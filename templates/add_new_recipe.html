@@ -62,7 +62,9 @@
     <input type="radio" name="sweetener" value="brown sugar"> brown sugar<BR>
     <input type="radio" name="sweetener" value="honey"> honey<BR>
     <input type="radio" name="sweetener" value="maple syrup"> maple syrup<BR><BR>
-        
+    
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
     <BR><input type="submit" value="Save to the database">
 </form>
 

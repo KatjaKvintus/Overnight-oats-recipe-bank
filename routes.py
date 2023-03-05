@@ -1,14 +1,12 @@
 '''Module for handling page requests'''
 from random import randint
-from flask import redirect, render_template, request
-from flask import json
+from flask import redirect, render_template, request, session, abort
 from app import app
 import stars
 import users
 import recipes
 import comments
 import favorites
-
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -107,7 +105,8 @@ def mainpage():
         print("No entries in the database.")
         latest_recipe = [0]
         return render_template("mainpage.html", latest_recipe=latest_recipe,
-                                 index_for_recipe_of_the_week=index_for_recipe_of_the_week)
+                                 index_for_recipe_of_the_week=index_for_recipe_of_the_week,
+                                 csrf_token=session.csrf_token)
 
 
 @app.route("/search")
@@ -244,6 +243,9 @@ def add_new_recipe():
                                 message="Recipe name is too long. " +
                                "Please choose one that has maximum 40 characters.")
 
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+
     result = recipes.save_new_recipe(name, type, author_id, base_liquid, grain,
                                       protein, ingredient_1, ingredient_2, sweetener)
 
@@ -302,6 +304,9 @@ def add_comment():
                                 message="Your comment is too long. " +
                                "Please shorten it to maximum 1000 characters.")
 
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+        
     result = comments.add_comment(user_id, recipe_id, new_comment)
 
     if not result:
@@ -332,6 +337,14 @@ def random():
 @app.route("/admin_tools")
 def admin_tools():
     '''Functionalities for only admin level users'''
+
+    user_role = users.session.user_role
+
+    print("DEBUG: user_role on ", user_role)
+
+    if user_role != "admin":
+        return render_template("error.html", message="this section is only for users.")
+    
 
     return render_template("admin_tools.html")
 

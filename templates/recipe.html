@@ -78,6 +78,7 @@ return true;
 <B>Comment this recipe:</B>
 <form action="/add_comment" method="post" onsubmit="return check(this)"><BR>
 <input type="hidden" name="recipe_id" value="{{ show_this_recipe[0] }}"> <BR>
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 <textarea id="new_comment" name="new_comment" rows="4" cols="50" required></textarea><BR>
 <input type="submit" value="Save"><BR><BR>
 </form>

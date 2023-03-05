@@ -64,49 +64,48 @@
     <input type="radio" name="sweetener" value="maple syrup"> maple syrup<BR><BR>
         
     <BR><input type="submit" value="Save to the database">
-    </form>
-<BR><BR>
+</form>
 
 <script>
-function check(form) {
-    if (form.title.value.length > 40) {
-        alert("Error: too long title! Maximum length is 40 characters. Tip: include only  main ingredient names in the title.");
-        return false;
+    function check(form) {
+        if (form.title.value.length > 40) {
+            alert("Error: too long title! Maximum length is 40 characters. Tip: include only  main ingredient names in the title.");
+            return false;
+        }
+        if (form.title.value.length < 4) {
+            alert("Error: too short title! Minimum length is 40 characters. Idea: include main ingredient names in the title.");
+            return false;
+        }
+        if(form.type.value == "") {
+            alert("Please choose a type for this recipe.");
+            return false;
+        }
+        if(form.base_liquid.value == "") {
+            alert("Please choose the liquid base for this recipe.");
+            return false;
+        }
+        if(form.ingredient_1.value == "") {
+            alert("Please choose the ingredient 1 for this recipe.");
+            return false;
+        }
+        if(form.ingredient_2.value == "") {
+            alert("Please choose the ingredient 2 for this recipe.");
+            return false;
+        }
+        if(form.grain.value == "") {
+            alert("Please choose the grain for this recipe.");
+            return false;
+        }
+        if(form.protein.value == "") {
+            alert("Please choose the protein for this recipe.");
+            return false;
+        }
+        if(form.sweetener.value == "") {
+            alert("Please choose the sweetener for this recipe.");
+            return false;
+        }
+        return true;
     }
-    if (form.title.value.length < 4) {
-        alert("Error: too short title! Minimum length is 40 characters. Idea: include main ingredient names in the title.");
-        return false;
-    }
-    if(form.type.value == "") {
-        alert("Please choose a type for this recipe.");
-        return false;
-    }
-    if(form.base_liquid.value == "") {
-        alert("Please choose the liquid base for this recipe.");
-        return false;
-    }
-    if(form.ingredient_1.value == "") {
-        alert("Please choose the ingredient 1 for this recipe.");
-        return false;
-    }
-    if(form.ingredient_2.value == "") {
-        alert("Please choose the ingredient 2 for this recipe.");
-        return false;
-    }
-    if(form.grain.value == "") {
-        alert("Please choose the grain for this recipe.");
-        return false;
-    }
-    if(form.protein.value == "") {
-        alert("Please choose the protein for this recipe.");
-        return false;
-    }
-    if(form.sweetener.value == "") {
-        alert("Please choose the sweetener for this recipe.");
-        return false;
-    }
-    return true;
-}
 </script>
 
 {% endblock %}

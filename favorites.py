@@ -1,4 +1,4 @@
-'''Modelu for handling all recipe faving activities: add, del, check'''
+'''Module for handling all recipe faving activities: add, del, check'''
 from sqlalchemy.sql import text
 from db import db
 

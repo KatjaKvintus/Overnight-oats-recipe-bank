@@ -1,12 +1,14 @@
 '''Module for handling page requests'''
 from random import randint
 from flask import redirect, render_template, request
+from flask import json
 from app import app
 import stars
 import users
 import recipes
 import comments
 import favorites
+
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -99,13 +101,13 @@ def mainpage():
         except SystemError:
             index_for_recipe_of_the_week=index_for_recipe_of_the_week = 0
         return render_template("mainpage.html", latest_recipe=latest_recipe,
-                                index_for_recipe_of_the_week=index_for_recipe_of_the_week)
+                                 index_for_recipe_of_the_week=index_for_recipe_of_the_week)
 
     except SystemError:
         print("No entries in the database.")
         latest_recipe = [0]
         return render_template("mainpage.html", latest_recipe=latest_recipe,
-                                index_for_recipe_of_the_week=index_for_recipe_of_the_week)
+                                 index_for_recipe_of_the_week=index_for_recipe_of_the_week)
 
 
 @app.route("/search")
@@ -137,7 +139,6 @@ def search_results():
     '''Handling search results listing'''
 
     source_route = source_route
-
     return render_template("search_results.html")
 
 
@@ -154,6 +155,7 @@ def page():
         recipe_comments = comments.show_comments(recipe_id)
         star_rating = stars.count_stars(recipe_id)
         recipe_fav_status = favorites.check_favorite_status(recipe_id, user_id)
+        recipe_stars_status = stars.check_if_user_has_given_stars(recipe_id, user_id)
 
     if len(recipe_comments) == 0:
         note = "No comments yet. Be the first one?"
@@ -165,6 +167,11 @@ def page():
     else:
         rating_text = "Reviews for this recipe: " + str(star_rating[0]) + "/5 from " + str(star_rating[1]) + " reviewers"
 
+    if recipe_stars_status == 1:
+        recipe_stars_status = "You have already reviewed this recipe."
+    else:
+        recipe_stars_status = "You have not yet reviewed this recipe."
+
     if recipe_fav_status == 1:
         recipe_fav_status = "This recipe is already in your favorites."
     else:
@@ -173,7 +180,8 @@ def page():
     return render_template("recipe.html", recipe_id=recipe_id, show_this_recipe=show_this_recipe,
                             recipe_comments=recipe_comments, note=note,
                             rating_text=rating_text, 
-                            recipe_fav_status=recipe_fav_status)
+                            recipe_fav_status=recipe_fav_status,
+                            recipe_stars_status=recipe_stars_status)
 
 
 @app.route("/recipe_type", methods=["GET", "POST"])
@@ -223,6 +231,13 @@ def add_new_recipe():
         ingredient_1 = request.form["ingredient_1"]
         ingredient_2 = request.form["ingredient_2"]
         sweetener = request.form["sweetener"]
+    
+    list_of_current_recipe_names = recipes.fetch_recipe_names()
+
+    if name in list_of_current_recipe_names:
+        return render_template("error.html",
+                                message="This recipa name is already in the database. " +
+                                "Please choose another name for your recipe. ")
 
     if len(name) > 40:
         return render_template("error.html",

@@ -94,6 +94,7 @@ function check(form) {
 
 <hr>
 {{ rating_text }}<BR><BR>
+<i>{{ recipe_stars_status }}</i><BR><BR>
 <B>Review this recipe:</B><BR>
 <i>Scale: 1-5</i><BR>
 <form action="/review" method="POST" onsubmit="return check(this)">
@@ -110,6 +111,10 @@ function check(form) {
 function check(form) {
     if (form.stars.value == "") {
         alert("Please give the rating.");
+        return false;
+    }
+    if ("{{ recipe_stars_status }}" == "You have already reviewed this recipe.") {
+        alert("You can give stars to a recipe only once.");
         return false;
     }
     return true;

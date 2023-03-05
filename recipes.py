@@ -140,6 +140,16 @@ def get_index_for_the_latest_recipe_of_the_week():
         return index_of_the_latest_one
 
 
-def change_fav_status(recipe_id, user_id):
-    '''Checks if recipe is users favorite or not, and on click changes the status'''
+def fetch_recipe_names():
+    '''Returns a list of recipe names already in the database
+    to prevent users adding multiple recipes in the same name'''
+
+    recipe_list = get_all_recipes()
+    recipe_names = []
+
+    for item in recipe_list:
+        recipe_names.append(item[1])
+    
+    return recipe_names
+
 
